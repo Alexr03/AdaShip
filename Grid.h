@@ -21,7 +21,9 @@ public:
 
     void print() const;
 
-    std::string shipIdForCoord(int row, std::string col) const;
+    std::string shipIdForCoord(int row, const std::string& col) const;
+
+    Ship shipForCoord(int row, const std::string &col) const;
 };
 
 #endif //ADASHIP2_GRID_H

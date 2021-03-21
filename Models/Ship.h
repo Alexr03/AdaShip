@@ -26,6 +26,8 @@ private:
     bool destroyed{};
     std::vector<std::string> coordinates;
 public:
+    bool isInvalid();
+
     const std::string &getName() const;
 
     void setName(const std::string &name);

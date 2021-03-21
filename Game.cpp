@@ -21,6 +21,12 @@ Game::Game() {
 void Game::Start() {
     gameGrid.setPlayer(activePlayer);
     gameGrid.print();
+    auto ship = gameGrid.shipForCoord(3, "D");
+    if(ship.isInvalid()){
+        cout << "null";
+    } else{
+        cout << "ship: " << ship.getName();
+    }
 //    while(state){
 //        activePlayer->takeTurn();
 //    }
@@ -29,6 +35,8 @@ void Game::Start() {
 }
 
 Player *Game::GeneratePlayer() {
+    auto *realPlayer = new RealPlayer();
+    return realPlayer;
     std::string choice = iohelper::getInput("Press 1 for you to play or 2 for the computer to play");
     if (choice == "1") {
         auto *realPlayer = new RealPlayer();

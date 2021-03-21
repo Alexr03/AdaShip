@@ -7,6 +7,10 @@
 #include "../Helpers/stringhelper.h"
 #include "../Settings.h"
 
+bool Ship::isInvalid() {
+    return Ship::name == "invalid";
+}
+
 const std::string &Ship::getName() const {
     return name;
 }

@@ -4,6 +4,7 @@
 
 #include "Grid.h"
 #include "Helpers/iohelper.h"
+#include "Constants.h"
 
 void Grid::print() const {
     std::cout << "\n";                  /* output new line before grid */
@@ -53,16 +54,46 @@ Player *Grid::getPlayer() const {
     return player;
 }
 
-std::string Grid::shipIdForCoord(int row, std::string col) const {
+Ship Grid::shipForCoord(int row, const std::string& col) const {
 //    std::cout << "Ships: " << getPlayer()->getBoard()->getShips().size();
     for (const auto& ship : getPlayer()->getBoard()->getShips()) {
         if (ship.getCoordinates().empty()) {
-//            std::cout << "coords for ship " << ship.getName() << " is empty." << std::endl;
             continue;
         }
-        if (std::stoi(ship.getCoordinates().front()) == row){
+        if (ship.getCoordinates().front() == to_string(row)){
             for (auto it = std::next(ship.getCoordinates().begin()); it != ship.getCoordinates().end(); ++it) {
                 if(*it == col){
+                    return ship;
+                }
+            }
+        }
+        if (ship.getCoordinates().front() == col){
+            for (auto it = std::next(ship.getCoordinates().begin()); it != ship.getCoordinates().end(); ++it) {
+                if(*it == to_string(row)){
+                    return ship;
+                }
+            }
+        }
+    }
+    return Constants::GetInvalidShip();
+}
+
+std::string Grid::shipIdForCoord(int row, const std::string& col) const {
+//    std::cout << "Ships: " << getPlayer()->getBoard()->getShips().size();
+    for (const auto& ship : getPlayer()->getBoard()->getShips()) {
+        if (ship.getCoordinates().empty()) {
+            continue;
+        }
+        if (ship.getCoordinates().front() == to_string(row)){
+            for (auto it = std::next(ship.getCoordinates().begin()); it != ship.getCoordinates().end(); ++it) {
+                if(*it == col){
+                    return ship.getId();
+                }
+            }
+        }
+        if (ship.getCoordinates().front() == col){
+            for (auto it = std::next(ship.getCoordinates().begin()); it != ship.getCoordinates().end(); ++it) {
+                if(*it == to_string(row)){
                     return ship.getId();
                 }
             }
