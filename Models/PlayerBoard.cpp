@@ -95,6 +95,6 @@ PlayerBoard::PlayerBoard(Player *player1) : ships(Settings::getShips()), player(
                 c.setCoordinates(coords);
             }
         }
-        Logger::Divider();
+        Logger::DebugDivider();
     }
 }

@@ -7,6 +7,7 @@
 #include "Players/RealPlayer.h"
 #include "Helpers/iohelper.h"
 #include "Grid.h"
+#include "Helpers/Logger.h"
 
 int currentPlayer = 1;
 
@@ -22,7 +23,7 @@ void Game::Start() {
     iohelper::clearScreen();
     gameGrid.setPlayer(activePlayer);
 //    gameGrid.print();
-    DisplayOpponentGrid();
+    DisplayAllGrids();
 //    while(state){
 //        activePlayer->takeTurn();
 //    }
@@ -61,6 +62,16 @@ void Game::NextPlayer() {
 
 void Game::DisplayOpponentGrid() {
     NextPlayer();
+    cout << "Player " << currentPlayer << " Grid:";
     gameGrid.print();
     NextPlayer();
+}
+
+void Game::DisplayAllGrids() {
+    Logger::Divider();
+    cout << "Player " << currentPlayer << " Grid:";
+    gameGrid.print();
+    Logger::Divider();
+    DisplayOpponentGrid();
+    Logger::Divider();
 }

@@ -7,12 +7,13 @@
 #include "Settings.h"
 #include "Helpers/iohelper.h"
 #include "Game.h"
+#include "Helpers/Logger.h"
 
 using namespace std;
 
 void Menu::start() {
-    cout << "1) One Player v Computer Game" << endl;
-    cout << "9) Quit" << endl;
+    Logger::Game("1) One Player v Computer Game");
+    Logger::Game("9) Quit");
 
     while (true) {
         auto input = iohelper::getInputBetweenRange("Enter a option", 1, 9);

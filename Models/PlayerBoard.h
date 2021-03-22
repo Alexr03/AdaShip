@@ -12,6 +12,7 @@ class PlayerBoard : public Board {
 private:
     Player *player{};
     std::vector<Ship> ships{};
+    std::vector<std::string> hitSpots{};
 
 public:
     explicit PlayerBoard(Player *player1);

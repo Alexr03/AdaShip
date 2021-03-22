@@ -28,6 +28,8 @@ public:
     void NextPlayer();
 
     void DisplayOpponentGrid();
+
+    void DisplayAllGrids();
 };
 
 

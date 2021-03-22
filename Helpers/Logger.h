@@ -14,10 +14,22 @@ public:
         if(Settings::getSettingsFile()["Settings"]["Debug"] == "1"){
             cout << "[DEBUG] " << msg << std::endl;
         }
+        iohelper::setDefaultFontColor();
+    }
+
+    static void Game(std::string msg){
+        iohelper::setDefaultFontColor();
+        cout << "[GAME] " << msg << std::endl;
     }
 
     static void Divider(){
-        cout << "---------------------------------------------------" << std::endl;
+        cout << "---------------------------------------------------------------------" << std::endl;
+    }
+
+    static void DebugDivider(){
+        if(Settings::getSettingsFile()["Settings"]["Debug"] == "1"){
+            cout << "---------------------------------------------------------------------" << std::endl;
+        }
     }
 };
 
