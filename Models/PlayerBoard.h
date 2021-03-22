@@ -23,6 +23,8 @@ public:
     const std::vector<Coord> &getHitSpots() const;
 
     void hitSpot(int row, std::string col);
+
+    bool isShipOverlapping(const Ship& ship);
 };
 
 #endif //ADASHIP2_PLAYERBOARD_H

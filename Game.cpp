@@ -29,6 +29,7 @@ void Game::Start() {
     cout << "Ø = Fired shot that missed." << endl;
     iohelper::setFontColor(FOREGROUND_RED);
     cout << "* = Fired shot that hit a ship" << endl;
+    cout << "▓ = Destroyed Ship" << endl;
     iohelper::setDefaultFontColor();
     Logger::Divider();
 

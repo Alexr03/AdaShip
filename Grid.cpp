@@ -39,6 +39,10 @@ void Grid::print() const {
             else if(hit){
                 iohelper::setFontColor(FOREGROUND_RED);
                 shipId = "*";
+                auto ship = shipForCoord(i + 1, stringhelper::numberToLetters(j + 1));
+                if(ship.isDestroyed()){
+                    shipId = "▓";
+                }
             }
             if (!j) {
                 std::cout << std::setw(3) << i + 1 << " |  ";
@@ -90,18 +94,10 @@ Ship Grid::shipForCoord(int row, const std::string &col) const {
         if (ship.getCoordinates().empty()) {
             continue;
         }
-        if (ship.getCoordinates().front() == to_string(row)) {
-            for (auto it = std::next(ship.getCoordinates().begin()); it != ship.getCoordinates().end(); ++it) {
-                if (*it == col) {
-                    return ship;
-                }
-            }
-        }
-        if (ship.getCoordinates().front() == col) {
-            for (auto it = std::next(ship.getCoordinates().begin()); it != ship.getCoordinates().end(); ++it) {
-                if (*it == to_string(row)) {
-                    return ship;
-                }
+
+        for(const auto &coords : ship.getCoordinates()){
+            if(coords.getRow() == row && coords.getCol() == col){
+                return ship;
             }
         }
     }
@@ -113,18 +109,10 @@ std::string Grid::shipIdForCoord(int row, const std::string &col) const {
         if (ship.getCoordinates().empty()) {
             continue;
         }
-        if (ship.getCoordinates().front() == to_string(row)) {
-            for (auto it = std::next(ship.getCoordinates().begin()); it != ship.getCoordinates().end(); ++it) {
-                if (*it == col) {
-                    return ship.getId();
-                }
-            }
-        }
-        if (ship.getCoordinates().front() == col) {
-            for (auto it = std::next(ship.getCoordinates().begin()); it != ship.getCoordinates().end(); ++it) {
-                if (*it == to_string(row)) {
-                    return ship.getId();
-                }
+
+        for(const auto &coords : ship.getCoordinates()){
+            if(coords.getRow() == row && coords.getCol() == col){
+                return ship.getId();
             }
         }
     }

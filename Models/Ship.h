@@ -9,6 +9,7 @@
 #include <string>
 #include <list>
 #include <vector>
+#include "Coord.h"
 
 class PlayerBoard;
 class Ship {
@@ -17,7 +18,7 @@ private:
     std::string id;
     std::string name;
     int length{};
-    std::vector<std::string> coordinates;
+    std::vector<Coord> coordinates;
     PlayerBoard *playerBoard;
 public:
     explicit Ship(int id);
@@ -36,9 +37,9 @@ public:
 
     bool isDestroyed() const;
 
-    const std::vector<std::string> &getCoordinates() const;
+    const std::vector<Coord> &getCoordinates() const;
 
-    void setCoordinates(const std::vector<std::string> &coords);
+    void setCoordinates(const std::vector<Coord> &coordinates);
 
     PlayerBoard *getPlayerBoard() const;
 
