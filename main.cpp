@@ -1,14 +1,12 @@
-#include <iostream>
 #include "Game.h"
 #include "Helpers/iohelper.h"
+#include "Menu.h"
 
 using namespace std;
 
 int main() {
     iohelper::setDefaultFontColor();
-    std::cout << "Starting Game..." << std::endl;
-    Game game{};
-    game.Start();
+    Menu::start();
 
     return 0;
 }

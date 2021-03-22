@@ -31,6 +31,10 @@ public:
     static void setFontColor(string colorCode);
 
     static void setDefaultFontColor();
+
+    static void clearScreen();
+
+    static int getInputBetweenRange(string question, int lowerRange, int higherRange);
 };
 
 

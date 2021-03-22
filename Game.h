@@ -26,6 +26,8 @@ public:
     void SetActivePlayer(Player* player);
 
     void NextPlayer();
+
+    void DisplayOpponentGrid();
 };
 
 

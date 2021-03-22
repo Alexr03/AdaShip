@@ -19,14 +19,10 @@ Game::Game() {
 }
 
 void Game::Start() {
+    iohelper::clearScreen();
     gameGrid.setPlayer(activePlayer);
-    gameGrid.print();
-    auto ship = gameGrid.shipForCoord(3, "D");
-    if(ship.isInvalid()){
-        cout << "null";
-    } else{
-        cout << "ship: " << ship.getName();
-    }
+//    gameGrid.print();
+    DisplayOpponentGrid();
 //    while(state){
 //        activePlayer->takeTurn();
 //    }
@@ -61,4 +57,10 @@ void Game::NextPlayer() {
         SetActivePlayer(player1);
         currentPlayer = 1;
     }
+}
+
+void Game::DisplayOpponentGrid() {
+    NextPlayer();
+    gameGrid.print();
+    NextPlayer();
 }
