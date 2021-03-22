@@ -10,15 +10,15 @@
 #include <list>
 #include <vector>
 #include "Coord.h"
+#include "MapEntity.h"
 
 class PlayerBoard;
-class Ship {
+class Ship : public MapEntity {
 
 private:
     std::string id;
     std::string name;
     int length{};
-    std::vector<Coord> coordinates;
     PlayerBoard *playerBoard;
 public:
     explicit Ship(int id);
@@ -36,10 +36,6 @@ public:
     void setLength(int length);
 
     bool isDestroyed() const;
-
-    const std::vector<Coord> &getCoordinates() const;
-
-    void setCoordinates(const std::vector<Coord> &coordinates);
 
     PlayerBoard *getPlayerBoard() const;
 

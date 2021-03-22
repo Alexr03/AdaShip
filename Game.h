@@ -32,6 +32,8 @@ public:
     void DisplayAllGrids();
 
     void HitOpponent(int row, std::string col);
+
+    void printIconDef() const;
 };
 
 

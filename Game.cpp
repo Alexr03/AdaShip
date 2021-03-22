@@ -14,8 +14,9 @@ int currentPlayer = 1;
 
 Game::Game() {
     player1 = GeneratePlayer();
-
+    iohelper::clearScreen();
     player2 = GeneratePlayer();
+    iohelper::clearScreen();
     activePlayer = player1;
 
     gameGrid.setPlayer(activePlayer);
@@ -24,6 +25,22 @@ Game::Game() {
 void Game::Start() {
     iohelper::clearScreen();
 
+    gameGrid.setPlayer(activePlayer);
+//    gameGrid.print();
+    bool state = true;
+    while(state){
+        iohelper::clearScreen();
+        printIconDef();
+        DisplayAllGrids();
+        Logger::Game("Player " + to_string(currentPlayer) + " its your turn!");
+        activePlayer->takeTurn();
+        NextPlayer();
+    }
+//    std::cout << "ree" << std::endl;
+//    std::cout << "Player1 = " << typeid(player1).name() << std::endl;
+}
+
+void Game::printIconDef() const {
     cout << "Icon Meanings" << endl;
     iohelper::setFontColor(FOREGROUND_YELLOW);
     cout << "Ø = Fired shot that missed." << endl;
@@ -32,19 +49,6 @@ void Game::Start() {
     cout << "▓ = Destroyed Ship" << endl;
     iohelper::setDefaultFontColor();
     Logger::Divider();
-
-    gameGrid.setPlayer(activePlayer);
-//    gameGrid.print();
-    bool state = true;
-    while(state){
-        iohelper::clearScreen();
-        DisplayAllGrids();
-        Logger::Game("Player " + to_string(currentPlayer) + " its your turn!");
-        activePlayer->takeTurn();
-        NextPlayer();
-    }
-//    std::cout << "ree" << std::endl;
-//    std::cout << "Player1 = " << typeid(player1).name() << std::endl;
 }
 
 Player *Game::GeneratePlayer() {

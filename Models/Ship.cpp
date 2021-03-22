@@ -32,7 +32,7 @@ bool Ship::isDestroyed() const {
     auto hitSpots = playerBoard->getHitSpots();
     int hit = 0;
     for (const auto &hitSpot : hitSpots) {
-        for (const auto &coord : coordinates){
+        for (const auto &coord : getCoordinates()){
             if(hitSpot.getCol() == coord.getCol() && hitSpot.getRow() == coord.getRow()){
                 hit++;
             }
@@ -58,12 +58,4 @@ PlayerBoard *Ship::getPlayerBoard() const {
 
 void Ship::setPlayerBoard(PlayerBoard *playerBoard) {
     Ship::playerBoard = playerBoard;
-}
-
-const std::vector<Coord> &Ship::getCoordinates() const {
-    return coordinates;
-}
-
-void Ship::setCoordinates(const std::vector<Coord> &coordinates) {
-    Ship::coordinates = coordinates;
 }
