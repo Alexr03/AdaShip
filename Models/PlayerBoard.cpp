@@ -122,8 +122,8 @@ bool PlayerBoard::isShipOverlapping(const Ship& ship) {
     for (const auto &s : ships) {
         for (const auto& coord : ship.getCoordinates()) {
             if (ship.getId() == s.getId()) continue;
-            for(const auto &coords2 : s.getCoordinates()){
-                if(coord.getCol() == coords2.getCol() && coord.getRow() == coords2.getRow()){
+            for(const auto &coord2 : s.getCoordinates()){
+                if(coord.getCol() == coord2.getCol() && coord.getRow() == coord2.getRow()){
                     Logger::Debug("Ship - " + ship.getName() + " is overlapping with ship - " + s.getName());
                     return true;
                 }
