@@ -6,18 +6,23 @@
 #define ADASHIP2_PLAYERBOARD_H
 
 #include "Board.h"
+#include "Coord.h"
 
 class Player;
 class PlayerBoard : public Board {
 private:
     Player *player{};
     std::vector<Ship> ships{};
-    std::vector<std::string> hitSpots{};
+    std::vector<Coord> hitSpots;
 
 public:
     explicit PlayerBoard(Player *player1);
 
     const std::vector<Ship> & getShips() const;
+
+    const std::vector<Coord> &getHitSpots() const;
+
+    void hitSpot(int row, std::string col);
 };
 
 #endif //ADASHIP2_PLAYERBOARD_H

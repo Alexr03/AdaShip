@@ -31,11 +31,27 @@ void Grid::print() const {
     for (int i = 0; i < rows; i++) {    /* output labeled grid rows */
         for (int j = 0; j < cols; j++) {
             shipId = shipIdForCoord(i + 1, stringhelper::numberToLetters(j + 1));
-            if (!j) {
-                std::cout << std::setw(3) << i + 1 << " |  " << shipId << "  |";
-            } else {
-                std::cout << "  " << shipId << "  |";
+            bool hit = coordHit(i + 1, stringhelper::numberToLetters(j + 1));
+            if(hit && shipId == " "){
+                iohelper::setFontColor(FOREGROUND_YELLOW);
+                shipId = "O";
             }
+            else if(hit){
+                iohelper::setFontColor(FOREGROUND_RED);
+                shipId = "X";
+            }
+            if (!j) {
+                std::cout << std::setw(3) << i + 1 << " |  ";
+                cout << shipId;
+                iohelper::setDefaultFontColor();
+                cout << "  |";
+            } else {
+                std::cout << "  ";
+                cout << shipId;
+                iohelper::setDefaultFontColor();
+                cout << "  |";
+            }
+            iohelper::setDefaultFontColor();
         }
         std::cout << " " << i + 1 << "\n";
     }
@@ -115,4 +131,14 @@ std::string Grid::shipIdForCoord(int row, const std::string &col) const {
         }
     }
     return " ";
+}
+
+bool Grid::coordHit(int row, const std::string &col) const {
+    auto hitSpots = getPlayer()->getBoard()->getHitSpots();
+    for (const auto& hitSpot : hitSpots) {
+        if(hitSpot.getRow() == row && hitSpot.getCol() == col){
+            return true;
+        }
+    }
+    return false;
 }

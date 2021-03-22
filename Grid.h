@@ -24,6 +24,8 @@ public:
     std::string shipIdForCoord(int row, const std::string& col) const;
 
     Ship shipForCoord(int row, const std::string &col) const;
+
+    bool coordHit(int row, const std::string &col) const;
 };
 
 #endif //ADASHIP2_GRID_H

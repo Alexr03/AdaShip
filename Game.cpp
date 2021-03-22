@@ -21,6 +21,7 @@ Game::Game() {
 
 void Game::Start() {
     iohelper::clearScreen();
+    gameGrid.getPlayer()->getBoard()->hitSpot(3, "F");
     gameGrid.setPlayer(activePlayer);
 //    gameGrid.print();
     DisplayAllGrids();

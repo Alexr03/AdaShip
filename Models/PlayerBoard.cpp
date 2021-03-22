@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <string>
 #include "PlayerBoard.h"
 #include "../Settings.h"
 #include "../Helpers/mathshelper.h"
@@ -97,4 +98,12 @@ PlayerBoard::PlayerBoard(Player *player1) : ships(Settings::getShips()), player(
         }
         Logger::DebugDivider();
     }
+}
+
+void PlayerBoard::hitSpot(int row, string col) {
+    hitSpots.emplace_back(row, col);
+}
+
+const vector<Coord> &PlayerBoard::getHitSpots() const {
+    return hitSpots;
 }

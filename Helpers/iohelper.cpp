@@ -3,9 +3,7 @@
 //
 
 #include "iohelper.h"
-#include "ConsoleColor.h"
 #include <regex>
-#include <cstdlib>
 
 std::string iohelper::getInput(string question, const string &regex) {
     string answer;
