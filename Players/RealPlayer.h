@@ -12,6 +12,10 @@ class RealPlayer : public Player {
 public:
     RealPlayer();
 
+    PlayerType type() override;
+
+    void init() override;
+
 private:
     void takeTurn() override;
 };

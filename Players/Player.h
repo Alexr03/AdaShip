@@ -9,22 +9,24 @@
 #include <vector>
 #include "../Models/Ship.h"
 #include "../Models/PlayerBoard.h"
+#include "PlayerType.h"
 
 struct Player {
 private:
     PlayerBoard* board{};
 public:
-    Player() {
-        auto *playerBoard = new PlayerBoard;
-        board = playerBoard;
-    }
+    Player() {}
 
-    PlayerBoard *getBoard() const;
+    virtual void init();
 
     void setBoard(PlayerBoard *board);
 
+    PlayerBoard *getBoard() const;
+
     /// Code to takeTurn for this exercise.
     virtual void takeTurn();
+
+    virtual PlayerType type();
 };
 
 #endif //ADASHIP2_PLAYER_H

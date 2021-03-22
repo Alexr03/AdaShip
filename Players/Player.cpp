@@ -3,7 +3,6 @@
 //
 
 #include "Player.h"
-#include "../Settings.h"
 
 void Player::takeTurn() {
 
@@ -13,8 +12,14 @@ PlayerBoard *Player::getBoard() const {
     return board;
 }
 
+PlayerType Player::type() {
+    return Generic;
+}
+
 void Player::setBoard(PlayerBoard *board) {
     Player::board = board;
 }
 
-
+void Player::init() {
+    // Do init here.
+}

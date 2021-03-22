@@ -8,11 +8,18 @@
 
 void Grid::print() const {
     std::cout << "\n";                  /* output new line before grid */
-    for (int i = 0; i < cols; i++)      /* output column headings */
-        if (!i)
+    for (int i = 0; i < cols; i++) { /* output column headings */
+        auto colLetter = stringhelper::numberToLetters(i + 1);
+        if (!i) {
             std::cout << "       " << stringhelper::numberToLetters(i + 1);
-        else
-            std::cout << "     " << stringhelper::numberToLetters(i + 1);
+        } else {
+            if (colLetter.size() == 1) {
+                std::cout << "     " << stringhelper::numberToLetters(i + 1);
+            } else {
+                std::cout << "    " << stringhelper::numberToLetters(i + 1);
+            }
+        }
+    }
     std::cout << "\n";
     for (int i = 0; i < cols; i++)      /* output header separators */
         if (!i)
@@ -38,11 +45,19 @@ void Grid::print() const {
         else
             std::cout << "------";
     std::cout << "\n";
-    for (int i = 0; i < cols; i++)      /* output column footer */
+    for (int i = 0; i < cols; i++) {      /* output column footer */
+        auto colLetter = stringhelper::numberToLetters(i + 1);
         if (!i)
             std::cout << "       " << stringhelper::numberToLetters(i + 1);
-        else
-            std::cout << "     " << stringhelper::numberToLetters(i + 1);
+        else {
+            if (colLetter.size() == 1) {
+                std::cout << "     " << stringhelper::numberToLetters(i + 1);
+            } else {
+                std::cout << "    " << stringhelper::numberToLetters(i + 1);
+            }
+        }
+    }
+
     std::cout << "\n";                  /* tidy up with new line */
 }
 
@@ -54,22 +69,22 @@ Player *Grid::getPlayer() const {
     return player;
 }
 
-Ship Grid::shipForCoord(int row, const std::string& col) const {
+Ship Grid::shipForCoord(int row, const std::string &col) const {
 //    std::cout << "Ships: " << getPlayer()->getBoard()->getShips().size();
-    for (const auto& ship : getPlayer()->getBoard()->getShips()) {
+    for (const auto &ship : getPlayer()->getBoard()->getShips()) {
         if (ship.getCoordinates().empty()) {
             continue;
         }
-        if (ship.getCoordinates().front() == to_string(row)){
+        if (ship.getCoordinates().front() == to_string(row)) {
             for (auto it = std::next(ship.getCoordinates().begin()); it != ship.getCoordinates().end(); ++it) {
-                if(*it == col){
+                if (*it == col) {
                     return ship;
                 }
             }
         }
-        if (ship.getCoordinates().front() == col){
+        if (ship.getCoordinates().front() == col) {
             for (auto it = std::next(ship.getCoordinates().begin()); it != ship.getCoordinates().end(); ++it) {
-                if(*it == to_string(row)){
+                if (*it == to_string(row)) {
                     return ship;
                 }
             }
@@ -78,22 +93,22 @@ Ship Grid::shipForCoord(int row, const std::string& col) const {
     return Constants::GetInvalidShip();
 }
 
-std::string Grid::shipIdForCoord(int row, const std::string& col) const {
+std::string Grid::shipIdForCoord(int row, const std::string &col) const {
 //    std::cout << "Ships: " << getPlayer()->getBoard()->getShips().size();
-    for (const auto& ship : getPlayer()->getBoard()->getShips()) {
+    for (const auto &ship : getPlayer()->getBoard()->getShips()) {
         if (ship.getCoordinates().empty()) {
             continue;
         }
-        if (ship.getCoordinates().front() == to_string(row)){
+        if (ship.getCoordinates().front() == to_string(row)) {
             for (auto it = std::next(ship.getCoordinates().begin()); it != ship.getCoordinates().end(); ++it) {
-                if(*it == col){
+                if (*it == col) {
                     return ship.getId();
                 }
             }
         }
-        if (ship.getCoordinates().front() == col){
+        if (ship.getCoordinates().front() == col) {
             for (auto it = std::next(ship.getCoordinates().begin()); it != ship.getCoordinates().end(); ++it) {
-                if(*it == to_string(row)){
+                if (*it == to_string(row)) {
                     return ship.getId();
                 }
             }

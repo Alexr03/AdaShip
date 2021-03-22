@@ -7,81 +7,94 @@
 #include "../Settings.h"
 #include "../Helpers/mathshelper.h"
 #include "../Helpers/stringhelper.h"
+#include "../Players/Player.h"
+#include "../Players/RealPlayer.h"
+#include "../Helpers/iohelper.h"
+#include "../Helpers/Logger.h"
 
 const std::vector<Ship> &PlayerBoard::getShips() const {
     return ships;
 }
 
-PlayerBoard::PlayerBoard() : ships(Settings::getShips()) {
+PlayerBoard::PlayerBoard(Player *player1) : ships(Settings::getShips()), player(player1) {
+    bool autoPlaceAll = false;
+    if (player->type() == Real) {
+        auto option = iohelper::getInputBetweenRange("Press 1 to autoplace ships.\nPress 2 to place ships manually.", 1,
+                                                     2);
+        autoPlaceAll = option == 1;
+    } else if (player->type() == Computer) {
+        autoPlaceAll = true;
+    }
     for (auto &c : ships) {
         vector<string> coords;
-        int posOrientation = mathshelper::generatePickedNumber(2); // 1 = Horizontal, 2 = Vertical
-//        if(posOrientation == 1){ // Debug for vertical
-//            posOrientation = 2;
-//        }
-        int posX = mathshelper::generatePickedNumber(Settings::getBoard().getSizeX());
-        int posY = mathshelper::generatePickedNumber(Settings::getBoard().getSizeY());
+        int posOrientation = 1;
+        int posX = 1;
+        int posY = 1;
+        if (autoPlaceAll) {
+            posOrientation = mathshelper::generatePickedNumber(2); // 1 = Horizontal, 2 = Vertical
+            posX = mathshelper::generatePickedNumber(Settings::getBoard().getSizeX());
+            posY = mathshelper::generatePickedNumber(Settings::getBoard().getSizeY());
+        } else {
+            auto option = iohelper::getInputBetweenRange(
+                    "Ship: " + c.getName() + "\nPress 1 to autoplace the ship.\nPress 2 to place the ship manually", 1,
+                    2);
+            if (option == 1) {
+                posOrientation = mathshelper::generatePickedNumber(2); // 1 = Horizontal, 2 = Vertical
+                posX = mathshelper::generatePickedNumber(Settings::getBoard().getSizeX());
+                posY = mathshelper::generatePickedNumber(Settings::getBoard().getSizeY());
+            } else {
+                posOrientation = iohelper::getInputBetweenRange("Orientation - 1 for Horizontal, 2 for Vertical", 1, 2);
+                posX = iohelper::getInputBetweenRange(
+                        "Position X, enter a number between 1-" + to_string(Settings::getBoard().getSizeX()), 1,
+                        Settings::getBoard().getSizeX());
+                posY = iohelper::getInputBetweenRange(
+                        "Position Y, enter a number between 1-" + to_string(Settings::getBoard().getSizeY()), 1,
+                        Settings::getBoard().getSizeY());
+            }
+        }
 
-        cout << "[D] pos orgin: " << posOrientation << " (" << c.getName() << ")" << endl;
+        Logger::Debug("Pos Orientation: " + (to_string(posOrientation)) + " (" + c.getName() + ")");
         if (posOrientation == 1) {
-            cout << "[D] horz";
+            Logger::Debug("Horizontal");
             coords.push_back(to_string(posY));
             // If the ship will overrun the map.
-            cout << "[D] posX = " << posX << endl;
-            cout << "[D] add = " << c.getLength() + posX << endl;
-            cout << (c.getLength() + posX <= Settings::getBoard().getSizeX()) << endl;
+            Logger::Debug("PosX: " + to_string(posX));
+            Logger::Debug("PosY: " + to_string(posY));
+            Logger::Debug("Length: " + to_string(c.getLength()));
             if (c.getLength() + posX <= Settings::getBoard().getSizeX()) {
-                cout << "[D] Entered loop" << endl;
                 for (int i = posX; i < posX + c.getLength(); ++i) {
-                    cout << "[D] Ship: " << c.getName() << " | adding coord: " << i << " ("
-                         << stringhelper::numberToLetters(i) << ") | PosX=" << posX << endl;
+                    Logger::Debug("Ship: " + c.getName() + " | adding coord: " + to_string(i) + " (" +
+                                  stringhelper::numberToLetters(i) + ")");
                     coords.push_back(stringhelper::numberToLetters(i));
-                }
-                for (const auto &coord : coords) {
-                    cout << "Coord::" << coord << endl;
                 }
                 c.setCoordinates(coords);
-            } else {
-                cout << "[D] needs to flip" << endl;
-                cout << "[D] Entered loop" << endl;
+            } else { // Flip, because it doesn't fit.
                 for (int i = posX; i > posX - c.getLength(); --i) {
-                    cout << "[D] Ship: " << c.getName() << " | adding coord: " << i << " ("
-                         << stringhelper::numberToLetters(i) << ") | PosX=" << posX << endl;
+                    Logger::Debug("Ship: " + c.getName() + " | adding coord: " + to_string(i) + " (" +
+                                  stringhelper::numberToLetters(i) + ")");
                     coords.push_back(stringhelper::numberToLetters(i));
-                }
-                for (const auto &coord : coords) {
-                    cout << "[D] Coord::" << coord << endl;
                 }
                 c.setCoordinates(coords);
             }
         } else {
             coords.push_back(stringhelper::numberToLetters(posX));
-            cout << "[D] vert";
+            Logger::Debug("Vertical");
             if (c.getLength() + posY <= Settings::getBoard().getSizeY()) {
-                cout << "[D] Entered loop" << endl;
                 for (int i = posY; i < posY + c.getLength(); ++i) {
-                    cout << "[D] Ship: " << c.getName() << " | adding coord: " << i << " ("
-                         << stringhelper::numberToLetters(i) << ") | PosY=" << posY << endl;
+                    Logger::Debug("Ship: " + c.getName() + " | adding coord: " + to_string(i) + " (" +
+                                  stringhelper::numberToLetters(i) + ")");
                     coords.push_back(to_string(i));
-                }
-                for (const auto &coord : coords) {
-                    cout << "Coord::" << coord << endl;
                 }
                 c.setCoordinates(coords);
-            } else{
-                cout << "[D] needs to flip" << endl;
-                cout << "[D] Entered loop" << endl;
+            } else { // Flip, because it doesn't fit.
                 for (int i = posY; i > posY - c.getLength(); --i) {
-                    cout << "[D] Ship: " << c.getName() << " | adding coord: " << i << " ("
-                         << stringhelper::numberToLetters(i) << ") | PosY=" << posY << endl;
+                    Logger::Debug("Ship: " + c.getName() + " | adding coord: " + to_string(i) + " (" +
+                                  stringhelper::numberToLetters(i) + ")");
                     coords.push_back(to_string(i));
-                }
-                for (const auto &coord : coords) {
-                    cout << "[D] Coord::" << coord << endl;
                 }
                 c.setCoordinates(coords);
             }
         }
-        cout << "--------------" << endl;
+        Logger::Divider();
     }
 }

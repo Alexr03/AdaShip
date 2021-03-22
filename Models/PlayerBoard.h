@@ -7,12 +7,14 @@
 
 #include "Board.h"
 
+class Player;
 class PlayerBoard : public Board {
 private:
+    Player *player{};
     std::vector<Ship> ships{};
 
 public:
-    PlayerBoard();
+    explicit PlayerBoard(Player *player1);
 
     const std::vector<Ship> & getShips() const;
 };

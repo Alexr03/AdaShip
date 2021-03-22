@@ -9,6 +9,7 @@
 #include <string>
 #include <iostream>
 #include <iomanip>
+#include "ConsoleColor.h"
 
 using namespace std;
 
@@ -26,15 +27,13 @@ public:
     /// \param width The width to give the text
     static void printElement(const string& t, const int &width);
 
-    /// Sets the font color in console - http://smallvoid.com/article/winnt-command-prompt-color.html
-    /// \param colorCode 0-9A-F
-    static void setFontColor(string colorCode);
-
     static void setDefaultFontColor();
 
     static void clearScreen();
 
     static int getInputBetweenRange(string question, int lowerRange, int higherRange);
+
+    static void setFontColor(ConsoleColor code);
 };
 
 

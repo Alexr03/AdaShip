@@ -23,6 +23,8 @@ public:
     static std::string trim_copy(std::string s);
 
     static std::string numberToLetters(int num);
+
+    static int lettersToNumber(std::string s);
 };
 
 

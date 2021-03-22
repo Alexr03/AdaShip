@@ -3,6 +3,7 @@
 //
 
 #include "iohelper.h"
+#include "ConsoleColor.h"
 #include <regex>
 #include <cstdlib>
 
@@ -31,13 +32,37 @@ void iohelper::printElement(const string &t, const int &width) {
     cout << left << setw(width) << setfill(separator) << t;
 }
 
-void iohelper::setFontColor(string colorCode) {
-    colorCode = "color " + colorCode;
-    system(colorCode.c_str());
+void iohelper::setFontColor(ConsoleColor code) {
+    switch (code) {
+        case FOREGROUND_BLACK:
+            printf("\033[30m");
+            break;
+        case FOREGROUND_RED:
+            printf("\033[31m");
+            break;
+        case FOREGROUND_GREEN:
+            printf("\033[32m");
+            break;
+        case FOREGROUND_YELLOW:
+            printf("\033[33m");
+            break;
+        case FOREGROUND_BLUE:
+            printf("\033[34m");
+            break;
+        case FOREGROUND_PURPLE:
+            printf("\033[35m");
+            break;
+        case FOREGROUND_CYAN:
+            printf("\033[36m");
+            break;
+        case FOREGROUND_WHITE:
+            printf("\033[37m");
+            break;
+    }
 }
 
 void iohelper::setDefaultFontColor() {
-    iohelper::setFontColor("F");
+    iohelper::setFontColor(FOREGROUND_WHITE);
 }
 
 void iohelper::clearScreen() {

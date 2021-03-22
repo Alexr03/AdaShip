@@ -73,3 +73,12 @@ std::string stringhelper::numberToLetters(int num) {
 
     return str;
 }
+
+int stringhelper::lettersToNumber(std::string s) {
+    int number = 0;
+    for (const auto& c : s) {
+        number *= 26;
+        number += c  - 'A' + 1;
+    }
+    return number;
+}
