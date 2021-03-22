@@ -36,6 +36,7 @@ void Game::Start() {
 //    gameGrid.print();
     bool state = true;
     while(state){
+        iohelper::clearScreen();
         DisplayAllGrids();
         Logger::Game("Player " + to_string(currentPlayer) + " its your turn!");
         activePlayer->takeTurn();

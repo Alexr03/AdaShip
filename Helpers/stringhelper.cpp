@@ -6,7 +6,7 @@
 
 #include <algorithm>
 #include <cctype>
-#include <locale>
+#include <string.h>
 #define MAX 50
 
 // trim from start (in place)
