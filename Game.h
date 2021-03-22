@@ -19,7 +19,7 @@ private:
 public:
     Game();
 
-    static Player* GeneratePlayer();
+    Player* GeneratePlayer();
 
     void Start();
 
@@ -30,6 +30,8 @@ public:
     void DisplayOpponentGrid();
 
     void DisplayAllGrids();
+
+    void HitOpponent(int row, std::string col);
 };
 
 

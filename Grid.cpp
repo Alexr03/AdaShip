@@ -34,11 +34,11 @@ void Grid::print() const {
             bool hit = coordHit(i + 1, stringhelper::numberToLetters(j + 1));
             if(hit && shipId == " "){
                 iohelper::setFontColor(FOREGROUND_YELLOW);
-                shipId = "O";
+                shipId = "Ø";
             }
             else if(hit){
                 iohelper::setFontColor(FOREGROUND_RED);
-                shipId = "X";
+                shipId = "*";
             }
             if (!j) {
                 std::cout << std::setw(3) << i + 1 << " |  ";
@@ -86,7 +86,6 @@ Player *Grid::getPlayer() const {
 }
 
 Ship Grid::shipForCoord(int row, const std::string &col) const {
-//    std::cout << "Ships: " << getPlayer()->getBoard()->getShips().size();
     for (const auto &ship : getPlayer()->getBoard()->getShips()) {
         if (ship.getCoordinates().empty()) {
             continue;
@@ -110,7 +109,6 @@ Ship Grid::shipForCoord(int row, const std::string &col) const {
 }
 
 std::string Grid::shipIdForCoord(int row, const std::string &col) const {
-//    std::cout << "Ships: " << getPlayer()->getBoard()->getShips().size();
     for (const auto &ship : getPlayer()->getBoard()->getShips()) {
         if (ship.getCoordinates().empty()) {
             continue;

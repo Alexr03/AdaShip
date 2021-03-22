@@ -10,22 +10,20 @@
 #include <list>
 #include <vector>
 
+class PlayerBoard;
 class Ship {
-
-public:
-    explicit Ship(int id);
 
 private:
     std::string id;
-public:
-    const std::string &getId() const;
-
-private:
     std::string name;
     int length{};
-    bool destroyed{};
     std::vector<std::string> coordinates;
+    PlayerBoard *playerBoard;
 public:
+    explicit Ship(int id);
+
+    const std::string &getId() const;
+
     bool isInvalid();
 
     const std::string &getName() const;
@@ -41,6 +39,10 @@ public:
     const std::vector<std::string> &getCoordinates() const;
 
     void setCoordinates(const std::vector<std::string> &coords);
+
+    PlayerBoard *getPlayerBoard() const;
+
+    void setPlayerBoard(PlayerBoard *playerBoard);
 };
 
 

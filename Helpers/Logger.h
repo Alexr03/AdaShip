@@ -6,6 +6,9 @@
 #define ADASHIP2_LOGGER_H
 
 #include <iostream>
+#include <string>
+
+using namespace std;
 
 class Logger {
 public:
@@ -23,12 +26,12 @@ public:
     }
 
     static void Divider(){
-        cout << "---------------------------------------------------------------------" << std::endl;
+        std::cout << "---------------------------------------------------------------------" << std::endl;
     }
 
     static void DebugDivider(){
         if(Settings::getSettingsFile()["Settings"]["Debug"] == "1"){
-            cout << "---------------------------------------------------------------------" << std::endl;
+            std::cout << "---------------------------------------------------------------------" << std::endl;
         }
     }
 };

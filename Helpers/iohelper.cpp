@@ -60,7 +60,7 @@ void iohelper::setFontColor(ConsoleColor code) {
 }
 
 void iohelper::setDefaultFontColor() {
-    iohelper::setFontColor(FOREGROUND_WHITE);
+    printf("\033[0m");
 }
 
 void iohelper::clearScreen() {

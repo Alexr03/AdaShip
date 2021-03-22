@@ -11,9 +11,11 @@
 #include "../Models/PlayerBoard.h"
 #include "PlayerType.h"
 
+class Game;
 struct Player {
 private:
     PlayerBoard* board{};
+    Game* game;
 public:
     Player() {}
 
@@ -27,6 +29,10 @@ public:
     virtual void takeTurn();
 
     virtual PlayerType type();
+
+    Game *getGame() const;
+
+    void setGame(Game *game);
 };
 
 #endif //ADASHIP2_PLAYER_H

@@ -3,9 +3,10 @@
 //
 
 #include "Ship.h"
-#include "../Helpers/mathshelper.h"
 #include "../Helpers/stringhelper.h"
 #include "../Settings.h"
+#include "../Models/PlayerBoard.h"
+#include <algorithm>
 
 bool Ship::isInvalid() {
     return Ship::name == "invalid";
@@ -28,7 +29,18 @@ void Ship::setLength(int length) {
 }
 
 bool Ship::isDestroyed() const {
-    return destroyed;
+    auto hitSpots = playerBoard->getHitSpots();
+    int hit = 0;
+    for (const auto &hitSpot : hitSpots) {
+        if (std::find(coordinates.begin(), coordinates.end(), hitSpot.getCol()) != coordinates.end()) {
+            if(std::find(coordinates.begin(), coordinates.end(), std::to_string(hitSpot.getRow())) != coordinates.end()){
+                //            Logger::Debug("Found hitspot @ " + std::to_string(hitSpot.getRow()) + " | " + hitSpot.getCol());
+                hit++;
+            }
+        }
+    }
+//    Logger::Debug(std::to_string(hit == getLength()));
+    return hit == getLength();
 }
 
 const std::vector<std::string> &Ship::getCoordinates() const {
@@ -41,6 +53,14 @@ void Ship::setCoordinates(const std::vector<std::string> &coords) {
 
 Ship::Ship(int id) : id(stringhelper::numberToLetters(id)) {}
 
-const string &Ship::getId() const {
+const std::string &Ship::getId() const {
     return id;
+}
+
+PlayerBoard *Ship::getPlayerBoard() const {
+    return playerBoard;
+}
+
+void Ship::setPlayerBoard(PlayerBoard *playerBoard) {
+    Ship::playerBoard = playerBoard;
 }

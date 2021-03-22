@@ -4,6 +4,8 @@
 
 #include <iostream>
 #include "RealPlayer.h"
+#include "../Helpers/iohelper.h"
+#include "../Game.h"
 
 void RealPlayer::init() {
     auto *playerBoard = new PlayerBoard(this);
@@ -11,7 +13,20 @@ void RealPlayer::init() {
 }
 
 void RealPlayer::takeTurn() {
-    Player::takeTurn();
+    auto coord = iohelper::getInput("Enter a coordinate (e.g. F2)", "");
+    string col;
+    int row;
+    for(char &c : coord){
+        if(isalpha(c)){
+            col += c;
+        }
+    }
+    row = stoi(coord.substr(col.size(), coord.size()));
+    getGame()->HitOpponent(row, col);
+
+//    if(row > Settings::getBoard().getSizeX()){
+//
+//    }
 }
 
 RealPlayer::RealPlayer() : Player() {

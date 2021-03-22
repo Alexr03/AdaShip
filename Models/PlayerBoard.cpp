@@ -2,14 +2,12 @@
 // Created by alexr on 01/03/2021.
 //
 
-#include <iostream>
 #include <string>
 #include "PlayerBoard.h"
 #include "../Settings.h"
 #include "../Helpers/mathshelper.h"
 #include "../Helpers/stringhelper.h"
 #include "../Players/Player.h"
-#include "../Players/RealPlayer.h"
 #include "../Helpers/iohelper.h"
 #include "../Helpers/Logger.h"
 
@@ -18,6 +16,9 @@ const std::vector<Ship> &PlayerBoard::getShips() const {
 }
 
 PlayerBoard::PlayerBoard(Player *player1) : ships(Settings::getShips()), player(player1) {
+    for(auto &ship : ships){
+        ship.setPlayerBoard(this);
+    }
     bool autoPlaceAll = false;
     if (player->type() == Real) {
         auto option = iohelper::getInputBetweenRange("Press 1 to autoplace ships.\nPress 2 to place ships manually.", 1,
