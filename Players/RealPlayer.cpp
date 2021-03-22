@@ -16,11 +16,12 @@ void RealPlayer::takeTurn() {
     auto coord = iohelper::getInput("Enter a coordinate (e.g. F2)", "");
     string col;
     int row;
-    for(char &c : coord){
-        if(isalpha(c)){
+    for (char &c : coord) {
+        if (isalpha(c)) {
             col += c;
         }
     }
+    std::transform(col.begin(), col.end(), col.begin(), ::toupper);
     row = stoi(coord.substr(col.size(), coord.size()));
     getGame()->HitOpponent(row, col);
 

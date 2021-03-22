@@ -46,9 +46,8 @@ PlayerBoard::PlayerBoard(Player *player1) : ships(Settings::getShips()), player(
                 posY = mathshelper::generatePickedNumber(Settings::getBoard().getSizeY());
             } else {
                 posOrientation = iohelper::getInputBetweenRange("Orientation - 1 for Horizontal, 2 for Vertical", 1, 2);
-                posX = iohelper::getInputBetweenRange(
-                        "Position X, enter a number between 1-" + to_string(Settings::getBoard().getSizeX()), 1,
-                        Settings::getBoard().getSizeX());
+                posX = stringhelper::lettersToNumber(iohelper::getInput(
+                        "Position X, enter a letter between A-" + stringhelper::numberToLetters(Settings::getBoard().getSizeX()), ""));
                 posY = iohelper::getInputBetweenRange(
                         "Position Y, enter a number between 1-" + to_string(Settings::getBoard().getSizeY()), 1,
                         Settings::getBoard().getSizeY());

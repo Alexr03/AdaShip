@@ -23,6 +23,15 @@ Game::Game() {
 
 void Game::Start() {
     iohelper::clearScreen();
+
+    cout << "Icon Meanings" << endl;
+    iohelper::setFontColor(FOREGROUND_YELLOW);
+    cout << "Ø = Fired shot that missed." << endl;
+    iohelper::setFontColor(FOREGROUND_RED);
+    cout << "* = Fired shot that hit a ship" << endl;
+    iohelper::setDefaultFontColor();
+    Logger::Divider();
+
     gameGrid.setPlayer(activePlayer);
 //    gameGrid.print();
     bool state = true;
