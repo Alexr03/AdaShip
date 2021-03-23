@@ -14,7 +14,9 @@
 using namespace std;
 
 void Menu::start() {
-    Logger::Game("1) One Player v Computer Game");
+    Logger::Game("1) Player v Computer Game");
+    Logger::Game("2) Player v Player Game");
+    Logger::Game("3) Computer v Computer Game");
     Logger::Game("9) Quit");
 
     while (true) {
@@ -26,7 +28,24 @@ void Menu::start() {
                 Game game{};
                 game.setPlayer1(new RealPlayer);
                 game.setPlayer2(new AiPlayer);
-
+                game.Start();
+                break;
+            }
+            case 2:{
+                iohelper::setDefaultFontColor();
+                std::cout << "Starting Game..." << std::endl;
+                Game game{};
+                game.setPlayer1(new RealPlayer);
+                game.setPlayer2(new RealPlayer);
+                game.Start();
+                break;
+            }
+            case 3:{
+                iohelper::setDefaultFontColor();
+                std::cout << "Starting Game..." << std::endl;
+                Game game{};
+                game.setPlayer1(new AiPlayer);
+                game.setPlayer2(new AiPlayer);
                 game.Start();
                 break;
             }
