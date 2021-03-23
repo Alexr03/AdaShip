@@ -1,0 +1,351 @@
+@startuml
+
+
+
+
+
+/' Objects '/
+
+class Board {
+	+getSizeX() : int {query}
+	+getSizeY() : int {query}
+	-sizeX : int
+	-sizeY : int
+	+setSizeX(int sizeX) : void
+	+setSizeY(int sizeY) : void
+}
+
+
+class Constants {
+	+{static} GetInvalidShip() : Ship
+}
+
+
+class Coord {
+	+Coord(int row, const std::string& col)
+	+getRow() : int {query}
+	-row : int
+	-col : std::string
+	+getCol() : std::string& {query}
+}
+
+
+class Game {
+	+Game()
+	+GeneratePlayer() : Player*
+	+DisplayAllGrids() : void
+	+DisplayOpponentGrid() : void
+	+HitOpponent(int row, std::string col) : void
+	+NextPlayer() : void
+	+SetActivePlayer(Player* player) : void
+	+Start() : void
+	+printIconDef() : void {query}
+}
+
+
+class Grid {
+	+getPlayer() : Player* {query}
+	-player : Player*
+	+shipForCoord(int row, const std::string& col) : Ship {query}
+	+coordHit(int row, const std::string& col) : bool {query}
+	-rows : int
+	+shipIdForCoord(int row, const std::string& col) : std::string {query}
+	+print() : void {query}
+	+setPlayer(Player*& player) : void
+}
+
+
+class Logger {
+	+{static} Debug(std::string msg) : void
+	+{static} DebugDivider() : void
+	+{static} Divider() : void
+	+{static} Game(std::string msg) : void
+}
+
+
+class MapEntity {
+	-coordinates : std::vector<Coord>
+	+getCoordinates() : std::vector<Coord>& {query}
+	+setCoordinates(const std::vector<Coord>& coordinates) : void
+}
+
+
+class Menu {
+	+settingsMenu() : void
+	+{static} start() : void
+}
+
+
+class PlayerBoard {
+	+PlayerBoard(Player* player1)
+	+isShipOverlapping(const Ship& ship) : bool
+	-hitSpots : std::vector<Coord>
+	+getHitSpots() : std::vector<Coord>& {query}
+	+getShips() : std::vector<Ship>& {query}
+	+hitSpot(int row, std::string col) : void
+}
+
+
+class RealPlayer {
+	+RealPlayer()
+	+type() : PlayerType
+	+init() : void
+	-takeTurn() : void
+}
+
+
+class Settings {
+	+{static} getBoard() : Board
+	+{static} getSettingsFile() : mINI::INIStructure
+	+{static} getShips() : std::vector<Ship>
+}
+
+
+class Ship {
+	+Ship(int id)
+	+getPlayerBoard() : PlayerBoard* {query}
+	-playerBoard : PlayerBoard*
+	+isDestroyed() : bool {query}
+	+isInvalid() : bool
+	+getLength() : int {query}
+	-id : std::string
+	-name : std::string
+	+getId() : std::string& {query}
+	+getName() : std::string& {query}
+	+setLength(int length) : void
+	+setName(const std::string& name) : void
+	+setPlayerBoard(PlayerBoard* playerBoard) : void
+}
+
+
+class iohelper {
+	+{static} getInputBetweenRange(string question, int lowerRange, int higherRange) : int
+	+{static} getInput(string question, const string& regex) : std::string
+	+{static} clearScreen() : void
+	+{static} printElement(const string& t, const int& width) : void
+	+{static} setDefaultFontColor() : void
+	+{static} setFontColor(ConsoleColor code) : void
+}
+
+
+class mathshelper {
+	+{static} generatePickedNumber(int maxNumber) : int
+	+{static} getEvenCount(const list<int>& numbers) : int
+	+{static} getOddCount(const list<int>& numbers) : int
+}
+
+
+class stringhelper {
+	+{static} lettersToNumber(std::string s) : int
+	+{static} ltrim_copy(std::string s) : std::string
+	+{static} numberToLetters(int num) : std::string
+	+{static} rtrim_copy(std::string s) : std::string
+	+{static} trim_copy(std::string s) : std::string
+	+{static} ltrim(std::string& s) : void
+	+{static} rtrim(std::string& s) : void
+	+{static} trim(std::string& s) : void
+}
+
+
+enum ConsoleColor {
+	FOREGROUND_BLACK
+	FOREGROUND_BLUE
+	FOREGROUND_CYAN
+	FOREGROUND_GREEN
+	FOREGROUND_PURPLE
+	FOREGROUND_RED
+	FOREGROUND_WHITE
+	FOREGROUND_YELLOW
+}
+
+
+enum PlayerType {
+	Computer
+	Generic
+	Real
+}
+
+
+class Player {
+	+Player()
+	-game : Game*
+	+getGame() : Game* {query}
+	+getBoard() : PlayerBoard* {query}
+	+type() : PlayerType
+	+init() : void
+	+setBoard(PlayerBoard* board) : void
+	+setGame(Game* game) : void
+	+takeTurn() : void
+}
+
+
+namespace mINI {
+	class INIFile {
+		+INIFile(std::string const& filename)
+		+~INIFile()
+		+generate(INIMap<INIMap<std::string>> data, bool pretty) : bool {query}
+		+read(INIMap<INIMap<std::string>> data) : bool {query}
+		+write(INIMap<INIMap<std::string>> data, bool pretty) : bool {query}
+		-filename : std::string
+	}
+
+	class INIGenerator {
+		+INIGenerator(std::string const& filename)
+		+~INIGenerator()
+		+operator<<(INIMap<INIMap<std::string>> data) : bool
+		+prettyPrint : bool
+		-fileWriteStream : std::ofstream
+	}
+
+	class INIMap <template<typename T>> {
+		+INIMap()
+		+INIMap(INIMap const& other)
+		+get(std::string key) : T {query}
+		+operator[](std::string key) : T&
+		+has(std::string key) : bool {query}
+		+remove(std::string key) : bool
+		+begin() : const_iterator {query}
+		+end() : const_iterator {query}
+		-setEmpty(std::string& key) : std::size_t
+		+size() : std::size_t {query}
+		-dataIndexMap : unordered_map<std::string, std::size_t>
+		-data : vector<T_DataItem>
+		+clear() : void
+		+set(std::string key, T obj) : void
+		+set(typename vector<std::pair<std::string, T>> multiArgs) : void
+	}
+
+	class INIReader {
+		+INIReader(std::string const& filename, bool keepLineData)
+		+~INIReader()
+		-readFile() : T_LineData
+		+getLines() : T_LineDataPtr
+		+operator>>(INIMap<INIMap<std::string>> data) : bool
+		-lineData : shared_ptr<T_LineData>
+		-fileReadStream : std::ifstream
+	}
+
+	class INIWriter {
+		+INIWriter(std::string const& filename)
+		+~INIWriter()
+		-getLazyOutput(shared_ptr<T_LineData> lineData, INIMap<INIMap<std::string>> data, INIMap<INIMap<std::string>> original) : T_LineData
+		+operator<<(INIMap<INIMap<std::string>> data) : bool
+		+prettyPrint : bool
+		-filename : std::string
+	}
+
+	namespace mINI::INIParser {
+		enum PDataType {
+			PDATA_COMMENT
+			PDATA_KEYVALUE
+			PDATA_NONE
+			PDATA_SECTION
+			PDATA_UNKNOWN
+		}
+	}
+}
+
+
+
+
+
+/' Inheritance relationships '/
+
+.Board <|-- .PlayerBoard
+
+
+.MapEntity <|-- .Ship
+
+
+.Player <|-- .RealPlayer
+
+
+
+
+
+/' Aggregation relationships '/
+
+.Grid o-- .Player
+
+
+.MapEntity *-- .Coord
+
+
+.Player o-- .Game
+
+
+.PlayerBoard *-- .Coord
+
+
+.Ship o-- .PlayerBoard
+
+
+
+
+
+
+/' Dependency relationships '/
+
+.ConsoleColor <.. .iohelper
+
+
+.Coord <.. .MapEntity
+
+
+.Game <.. .Player
+
+
+mINI.INIMap <.. mINI.INIFile
+
+
+mINI.INIMap <.. mINI.INIFile
+
+
+mINI.INIMap <.. mINI.INIFile
+
+
+mINI.INIMap <.. mINI.INIGenerator
+
+
+mINI.INIMap <.. mINI.INIMap
+
+
+mINI.INIMap <.. mINI.INIReader
+
+
+mINI.INIMap <.. mINI.INIWriter
+
+
+mINI.INIMap <.. mINI.INIWriter
+
+
+mINI.INIMap <.. mINI.INIWriter
+
+
+.Player <.. .Game
+
+
+.Player <.. .Grid
+
+
+.Player <.. .PlayerBoard
+
+
+.PlayerBoard <.. .Player
+
+
+.PlayerBoard <.. .Ship
+
+
+.Ship <.. .PlayerBoard
+
+
+
+
+
+
+/' Nested objects '/
+
+
+
+@enduml

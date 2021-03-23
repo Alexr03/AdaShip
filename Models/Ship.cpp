@@ -37,11 +37,6 @@ bool Ship::isDestroyed() const {
                 hit++;
             }
         }
-//        if (std::find(coordinates.begin(), coordinates.end(), hitSpot.getCol()) != coordinates.end()) {
-//            if(std::find(coordinates.begin(), coordinates.end(), std::to_string(hitSpot.getRow())) != coordinates.end()){
-//                hit++;
-//            }
-//        }
     }
     return hit == getLength();
 }
