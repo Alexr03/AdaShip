@@ -14,12 +14,12 @@
 using namespace std;
 
 void Menu::start() {
-    Logger::Game("1) Player v Computer Game");
-    Logger::Game("2) Player v Player Game");
-    Logger::Game("3) Computer v Computer Game");
-    Logger::Game("9) Quit");
-
     while (true) {
+        Logger::Divider();
+        Logger::Game("1) Player v Computer Game");
+        Logger::Game("2) Player v Player Game");
+        Logger::Game("3) Computer v Computer Game");
+        Logger::Game("9) Quit");
         auto input = iohelper::getInputBetweenRange("Enter a option", 1, 9);
         switch (input) {
             case 1: {

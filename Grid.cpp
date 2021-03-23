@@ -30,17 +30,16 @@ void Grid::print() const {
     std::string shipId = " ";
     for (int i = 0; i < rows; i++) {    /* output labeled grid rows */
         for (int j = 0; j < cols; j++) {
+            auto ship = shipForCoord(i + 1, stringhelper::numberToLetters(j + 1));
             shipId = shipIdForCoord(i + 1, stringhelper::numberToLetters(j + 1));
             bool hit = coordHit(i + 1, stringhelper::numberToLetters(j + 1));
-            if(hit && shipId == " "){
+            if (hit && ship.isInvalid()) {
                 iohelper::setFontColor(FOREGROUND_YELLOW);
                 shipId = "Ø";
-            }
-            else if(hit){
+            } else if (hit) {
                 iohelper::setFontColor(FOREGROUND_RED);
                 shipId = "*";
-                auto ship = shipForCoord(i + 1, stringhelper::numberToLetters(j + 1));
-                if(ship.isDestroyed()){
+                if (ship.isDestroyed()) {
                     shipId = "▓";
                 }
             }
@@ -95,8 +94,8 @@ Ship Grid::shipForCoord(int row, const std::string &col) const {
             continue;
         }
 
-        for(const auto &coords : ship.getCoordinates()){
-            if(coords.getRow() == row && coords.getCol() == col){
+        for (const auto &coords : ship.getCoordinates()) {
+            if (coords.getRow() == row && coords.getCol() == col) {
                 return ship;
             }
         }
@@ -105,14 +104,16 @@ Ship Grid::shipForCoord(int row, const std::string &col) const {
 }
 
 std::string Grid::shipIdForCoord(int row, const std::string &col) const {
-    for (const auto &ship : getPlayer()->getBoard()->getShips()) {
-        if (ship.getCoordinates().empty()) {
-            continue;
-        }
+    if (Settings::getSettingsFile()["Settings"]["ShowShipsOnGrid"] == "1") {
+        for (const auto &ship : getPlayer()->getBoard()->getShips()) {
+            if (ship.getCoordinates().empty()) {
+                continue;
+            }
 
-        for(const auto &coords : ship.getCoordinates()){
-            if(coords.getRow() == row && coords.getCol() == col){
-                return ship.getId();
+            for (const auto &coords : ship.getCoordinates()) {
+                if (coords.getRow() == row && coords.getCol() == col) {
+                    return ship.getId();
+                }
             }
         }
     }
@@ -121,8 +122,8 @@ std::string Grid::shipIdForCoord(int row, const std::string &col) const {
 
 bool Grid::coordHit(int row, const std::string &col) const {
     auto hitSpots = getPlayer()->getBoard()->getHitSpots();
-    for (const auto& hitSpot : hitSpots) {
-        if(hitSpot.getRow() == row && hitSpot.getCol() == col){
+    for (const auto &hitSpot : hitSpots) {
+        if (hitSpot.getRow() == row && hitSpot.getCol() == col) {
             return true;
         }
     }

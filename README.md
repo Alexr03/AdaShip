@@ -21,17 +21,17 @@ Adaship is a game of battleships made in C++.
 - [x] Create new menu system now with turn based prompts
 - [x] Print both the board to attack, and my own board
 - [x] Collect another coordinate from the users
-    - [ ] Validate this coordinate to see if it's already hit. Loop if failing
+    - [x] Validate this coordinate to see if it's already hit. Loop if failing
 - [x] Notify if this is a hit or a miss, printing this within the of the other players board (where you're shooting) 
   (Shows on the board as specific icon with colors)
 - [x] Have an auto-fire option using the auto-select function
-    - [ ] Validate again to ensure shots are not wasted on the same already shot at location
+    - [x] Validate again to ensure shots are not wasted on the same already shot at location
 - [x] Notify where the user has been shot, through their board
-- [ ] Have options to "quit game" and "end turn".
-- [ ] After every turn check if all ships have been destroyed
-    - [ ] If yes, end the game with the winner being shown on the screen
-    - [ ] If no, repeat the turn based game until this criteria is filled.
-- [ ] Go back to main-menu when game is complete.
+- [x] Have options to "quit game" and "end turn".
+- [x] After every turn check if all ships have been destroyed
+    - [x] If yes, end the game with the winner being shown on the screen
+    - [x] If no, repeat the turn based game until this criteria is filled.
+- [x] Go back to main-menu when game is complete.
 
 # Housekeeping
 - [x] Refactor code, ensuring there is no duplicate.

@@ -25,17 +25,29 @@ void Game::Start() {
 
     gameGrid.setPlayer(activePlayer);
 //    gameGrid.print();
-    bool state = true;
-    while(state){
+    while(true){
         iohelper::clearScreen();
         printIconDef();
         DisplayAllGrids();
         Logger::Game("Player " + to_string(currentPlayer) + " its your turn!");
         activePlayer->takeTurn();
+        int shipsDestroyed = 0;
+        for(auto &ship : getOpponentPlayer()->getBoard()->getShips()){
+            if(ship.isDestroyed()){
+                ++shipsDestroyed;
+            }
+        }
+
+        if(shipsDestroyed >= Settings::getShips().size()){
+            break;
+        }
         NextPlayer();
     }
-//    std::cout << "ree" << std::endl;
-//    std::cout << "Player1 = " << typeid(player1).name() << std::endl;
+
+    // Show end game
+    DisplayAllGrids();
+    Logger::Divider();
+    Logger::Game("Player " + to_string(currentPlayer) + " has won!");
 }
 
 void Game::printIconDef() {
@@ -47,23 +59,6 @@ void Game::printIconDef() {
     cout << "▓ = Destroyed Ship" << endl;
     iohelper::setDefaultFontColor();
     Logger::Divider();
-}
-
-Player *Game::GeneratePlayer() {
-//    auto *realPlayer = new RealPlayer();
-//    realPlayer->setGame(this);
-//    return realPlayer;
-    std::string choice = iohelper::getInput("Press 1 for you to play or 2 for the computer to play");
-    if (choice == "1") {
-        auto *realPlayer = new RealPlayer();
-        realPlayer->setGame(this);
-        return realPlayer;
-    } else {
-        //todo Actually do AI.
-        auto *aiPlayer = new AiPlayer();
-        aiPlayer->setGame(this);
-        return aiPlayer;
-    }
 }
 
 void Game::SetActivePlayer(Player *player) {
