@@ -361,13 +361,13 @@ mINI.INIMap <.. mINI.INIWriter
 .Player <.. .Grid
 
 
-.Player <.. .Player
-
-
 .Player <.. .PlayerBoard
 
 
-.Player <.. .Ship
+.PlayerBoard <.. .Player
+
+
+.PlayerBoard <.. .Ship
 
 
 .Ship <.. .PlayerBoard
