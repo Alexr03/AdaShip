@@ -1,3 +1,8 @@
+# AdaShip
+Adaship is a game of battleships made in C++.
+
+# UML Diagram
+![UML Diagram](diagrams/uml.png)
 
 # Breakdown of Tasks to complete
 - [x] Create a main-menu system
@@ -12,7 +17,7 @@
     - [x]  Validate that the users ship does not overlap a current ship/go off the board
 - [x] Create a random x and y chooser for the computer player / auto place function
     - [x] Use the same validation for when placing ships, not allowing overlaps/off board etc
-- [x] Impliment the auto-place function for the AI player
+- [x] Implement the auto-place function for the AI player
 - [x] Create new menu system now with turn based prompts
 - [x] Print both the board to attack, and my own board
 - [x] Collect another coordinate from the users
@@ -29,7 +34,7 @@
 - [ ] Go back to main-menu when game is complete.
 
 # Housekeeping
-- [ ] Refactor code, ensuring there is no duplicate.
-    - [ ] If there is duplicate, see where it is best to be stored, and use OOP functionality.
-- [ ] Remove any "code smells", ensuring code is easy and efficient
-- [ ] Ensure the code is well commented, explaining what classes/functions/code does within the software. Make it readable, as if a document were to be made from it and you can understand the whole project through this C++ comment doc.
+- [x] Refactor code, ensuring there is no duplicate.
+    - [x] If there is duplicate, see where it is best to be stored, and use OOP functionality.
+- [x] Remove any "code smells", ensuring code is easy and efficient
+- [x] Ensure the code is well commented, explaining what classes/functions/code does within the software. Make it readable, as if a document were to be made from it and you can understand the whole project through this C++ comment doc.

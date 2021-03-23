@@ -6,6 +6,7 @@
 #include "RealPlayer.h"
 #include "../Helpers/iohelper.h"
 #include "../Game.h"
+#include "../Helpers/mathshelper.h"
 
 void RealPlayer::init() {
     auto *playerBoard = new PlayerBoard(this);
@@ -13,16 +14,22 @@ void RealPlayer::init() {
 }
 
 void RealPlayer::takeTurn() {
-    auto coord = iohelper::getInput("Enter a coordinate (e.g. F2)", "");
+    auto coord = iohelper::getInput("Enter a coordinate (e.g. F2 or auto)", "");
     string col;
     int row;
-    for (char &c : coord) {
-        if (isalpha(c)) {
-            col += c;
+    if (coord != "auto") {
+        for (char &c : coord) {
+            if (isalpha(c)) {
+                col += c;
+            }
         }
+        std::transform(col.begin(), col.end(), col.begin(), ::toupper);
+        row = stoi(coord.substr(col.size(), coord.size()));
+    } else {
+        col = stringhelper::numberToLetters(mathshelper::generatePickedNumber(Settings::getBoard().getSizeX()));
+        row = mathshelper::generatePickedNumber(Settings::getBoard().getSizeY());
     }
-    std::transform(col.begin(), col.end(), col.begin(), ::toupper);
-    row = stoi(coord.substr(col.size(), coord.size()));
+
     getGame()->HitOpponent(row, col);
 
 //    if(row > Settings::getBoard().getSizeX()){
