@@ -38,7 +38,7 @@ void Game::Start() {
 //    std::cout << "Player1 = " << typeid(player1).name() << std::endl;
 }
 
-void Game::printIconDef() const {
+void Game::printIconDef() {
     cout << "Icon Meanings" << endl;
     iohelper::setFontColor(FOREGROUND_YELLOW);
     cout << "Ø = Fired shot that missed." << endl;
@@ -104,6 +104,14 @@ void Game::HitOpponent(int row, string col){
     NextPlayer();
     activePlayer->getBoard()->hitSpot(row, std::move(col));
     NextPlayer();
+}
+
+Player *Game::getOpponentPlayer() const {
+    if (currentPlayer == 1) {
+        return player2;
+    } else {
+        return player1;
+    }
 }
 
 Player *Game::getPlayer1() const {

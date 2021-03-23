@@ -33,7 +33,7 @@ public:
 
     void HitOpponent(int row, std::string col);
 
-    void printIconDef() const;
+    static void printIconDef() ;
 
     Player *getPlayer1() const;
 
@@ -50,6 +50,8 @@ public:
     const Grid &getGameGrid() const;
 
     void setGameGrid(const Grid &gameGrid);
+
+    Player *getOpponentPlayer() const;
 };
 
 

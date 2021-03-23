@@ -19,10 +19,19 @@ void AiPlayer::init() {
 }
 
 void AiPlayer::takeTurn() {
-    string col = stringhelper::numberToLetters(mathshelper::generatePickedNumber(Settings::getBoard().getSizeX()));
-    int row = mathshelper::generatePickedNumber(Settings::getBoard().getSizeY());
-    cout << "I choose to fire at Position: " << col << to_string(row) << endl;
-    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    bool validCoord = false;
+    string col;
+    int row;
+    while(!validCoord){
+        col = stringhelper::numberToLetters(mathshelper::generatePickedNumber(Settings::getBoard().getSizeX()));
+        row = mathshelper::generatePickedNumber(Settings::getBoard().getSizeY());
+        cout << "I choose to fire at Position: " << col << to_string(row) << endl;
+        validCoord = !getGame()->getOpponentPlayer()->getBoard()->isHitSpot(row, col);
+        if(!validCoord){
+            cout << "That is an invalid/already hit coordinate" << endl;
+        }
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     getGame()->HitOpponent(row, col);
 }
 

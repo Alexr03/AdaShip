@@ -24,6 +24,8 @@ public:
 
     void hitSpot(int row, std::string col);
 
+    bool isHitSpot(int row, std::string col);
+
     bool isShipOverlapping(const Ship& ship);
 };
 

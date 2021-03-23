@@ -6,6 +6,14 @@
 
 /' Objects '/
 
+class AiPlayer {
+	+AiPlayer()
+	+type() : PlayerType
+	+init() : void
+	+takeTurn() : void
+}
+
+
 class Board {
 	+getSizeX() : int {query}
 	+getSizeY() : int {query}
@@ -32,14 +40,23 @@ class Coord {
 
 class Game {
 	+Game()
+	+getGameGrid() : Grid& {query}
 	+GeneratePlayer() : Player*
+	+getActivePlayer() : Player* {query}
+	+getOpponentPlayer() : Player* {query}
+	+getPlayer1() : Player* {query}
+	+getPlayer2() : Player* {query}
 	+DisplayAllGrids() : void
 	+DisplayOpponentGrid() : void
 	+HitOpponent(int row, std::string col) : void
 	+NextPlayer() : void
 	+SetActivePlayer(Player* player) : void
 	+Start() : void
-	+printIconDef() : void {query}
+	+{static} printIconDef() : void
+	+setActivePlayer(Player* activePlayer) : void
+	+setGameGrid(const Grid& gameGrid) : void
+	+setPlayer1(Player* player1) : void
+	+setPlayer2(Player* player2) : void
 }
 
 
@@ -78,6 +95,7 @@ class Menu {
 
 class PlayerBoard {
 	+PlayerBoard(Player* player1)
+	+isHitSpot(int row, std::string col) : bool
 	+isShipOverlapping(const Ship& ship) : bool
 	-hitSpots : std::vector<Coord>
 	+getHitSpots() : std::vector<Coord>& {query}
@@ -257,6 +275,9 @@ namespace mINI {
 .MapEntity <|-- .Ship
 
 
+.Player <|-- .AiPlayer
+
+
 .Player <|-- .RealPlayer
 
 
@@ -295,6 +316,9 @@ namespace mINI {
 .Game <.. .Player
 
 
+.Grid <.. .Game
+
+
 mINI.INIMap <.. mINI.INIFile
 
 
@@ -325,16 +349,25 @@ mINI.INIMap <.. mINI.INIWriter
 .Player <.. .Game
 
 
+.Player <.. .Game
+
+
+.Player <.. .Game
+
+
+.Player <.. .Game
+
+
 .Player <.. .Grid
+
+
+.Player <.. .Player
 
 
 .Player <.. .PlayerBoard
 
 
-.PlayerBoard <.. .Player
-
-
-.PlayerBoard <.. .Ship
+.Player <.. .Ship
 
 
 .Ship <.. .PlayerBoard

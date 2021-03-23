@@ -132,3 +132,13 @@ bool PlayerBoard::isShipOverlapping(const Ship& ship) {
     }
     return false;
 }
+
+bool PlayerBoard::isHitSpot(int row, std::string col) {
+    for(auto &hitSpot : hitSpots){
+        if(hitSpot.getRow() == row && hitSpot.getCol() == col){
+            return true;
+        }
+    }
+
+    return false;
+}

@@ -14,27 +14,31 @@ void RealPlayer::init() {
 }
 
 void RealPlayer::takeTurn() {
-    auto coord = iohelper::getInput("Enter a coordinate (e.g. F2 or auto)", "");
     string col;
     int row;
-    if (coord != "auto") {
-        for (char &c : coord) {
-            if (isalpha(c)) {
-                col += c;
+    bool validCoord = false;
+    while(!validCoord){
+        col = "";
+        auto coord = iohelper::getInput("Enter a coordinate (e.g. F2 or auto)", "");
+        if (coord != "auto") {
+            for (char &c : coord) {
+                if (isalpha(c)) {
+                    col += c;
+                }
             }
+            std::transform(col.begin(), col.end(), col.begin(), ::toupper);
+            row = stoi(coord.substr(col.size(), coord.size()));
+        } else {
+            col = stringhelper::numberToLetters(mathshelper::generatePickedNumber(Settings::getBoard().getSizeX()));
+            row = mathshelper::generatePickedNumber(Settings::getBoard().getSizeY());
         }
-        std::transform(col.begin(), col.end(), col.begin(), ::toupper);
-        row = stoi(coord.substr(col.size(), coord.size()));
-    } else {
-        col = stringhelper::numberToLetters(mathshelper::generatePickedNumber(Settings::getBoard().getSizeX()));
-        row = mathshelper::generatePickedNumber(Settings::getBoard().getSizeY());
+
+        validCoord = !getGame()->getOpponentPlayer()->getBoard()->isHitSpot(row, col);
+        if(!validCoord){
+            cout << "That is an invalid/already hit coordinate" << endl;
+        }
     }
-
     getGame()->HitOpponent(row, col);
-
-//    if(row > Settings::getBoard().getSizeX()){
-//
-//    }
 }
 
 RealPlayer::RealPlayer() : Player() {
