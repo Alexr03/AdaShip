@@ -34,6 +34,22 @@ public:
     void HitOpponent(int row, std::string col);
 
     void printIconDef() const;
+
+    Player *getPlayer1() const;
+
+    void setPlayer1(Player *player1);
+
+    Player *getPlayer2() const;
+
+    void setPlayer2(Player *player2);
+
+    Player *getActivePlayer() const;
+
+    void setActivePlayer(Player *activePlayer);
+
+    const Grid &getGameGrid() const;
+
+    void setGameGrid(const Grid &gameGrid);
 };
 
 

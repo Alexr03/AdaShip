@@ -9,20 +9,18 @@
 #include "Helpers/iohelper.h"
 #include "Grid.h"
 #include "Helpers/Logger.h"
+#include "Players/AiPlayer.h"
 
 int currentPlayer = 1;
 
 Game::Game() {
-    player1 = GeneratePlayer();
-    iohelper::clearScreen();
-    player2 = GeneratePlayer();
-    iohelper::clearScreen();
-    activePlayer = player1;
 
-    gameGrid.setPlayer(activePlayer);
 }
 
 void Game::Start() {
+    player1->setGame(this);
+    player2->setGame(this);
+    activePlayer = player1;
     iohelper::clearScreen();
 
     gameGrid.setPlayer(activePlayer);
@@ -52,17 +50,19 @@ void Game::printIconDef() const {
 }
 
 Player *Game::GeneratePlayer() {
-    auto *realPlayer = new RealPlayer();
-    realPlayer->setGame(this);
-    return realPlayer;
+//    auto *realPlayer = new RealPlayer();
+//    realPlayer->setGame(this);
+//    return realPlayer;
     std::string choice = iohelper::getInput("Press 1 for you to play or 2 for the computer to play");
     if (choice == "1") {
         auto *realPlayer = new RealPlayer();
+        realPlayer->setGame(this);
         return realPlayer;
     } else {
         //todo Actually do AI.
-        auto *realPlayer = new RealPlayer();
-        return realPlayer;
+        auto *aiPlayer = new AiPlayer();
+        aiPlayer->setGame(this);
+        return aiPlayer;
     }
 }
 
@@ -104,4 +104,36 @@ void Game::HitOpponent(int row, string col){
     NextPlayer();
     activePlayer->getBoard()->hitSpot(row, std::move(col));
     NextPlayer();
+}
+
+Player *Game::getPlayer1() const {
+    return player1;
+}
+
+void Game::setPlayer1(Player *player1) {
+    Game::player1 = player1;
+}
+
+Player *Game::getPlayer2() const {
+    return player2;
+}
+
+void Game::setPlayer2(Player *player2) {
+    Game::player2 = player2;
+}
+
+Player *Game::getActivePlayer() const {
+    return activePlayer;
+}
+
+void Game::setActivePlayer(Player *activePlayer) {
+    Game::activePlayer = activePlayer;
+}
+
+const Grid &Game::getGameGrid() const {
+    return gameGrid;
+}
+
+void Game::setGameGrid(const Grid &gameGrid) {
+    Game::gameGrid = gameGrid;
 }

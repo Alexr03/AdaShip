@@ -8,6 +8,8 @@
 #include "Helpers/iohelper.h"
 #include "Game.h"
 #include "Helpers/Logger.h"
+#include "Players/RealPlayer.h"
+#include "Players/AiPlayer.h"
 
 using namespace std;
 
@@ -22,6 +24,9 @@ void Menu::start() {
                 iohelper::setDefaultFontColor();
                 std::cout << "Starting Game..." << std::endl;
                 Game game{};
+                game.setPlayer1(new RealPlayer);
+                game.setPlayer2(new AiPlayer);
+
                 game.Start();
                 break;
             }
