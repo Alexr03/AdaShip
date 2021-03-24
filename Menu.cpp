@@ -19,35 +19,39 @@ void Menu::start() {
         Logger::Game("1) Player v Computer Game");
         Logger::Game("2) Player v Player Game");
         Logger::Game("3) Player v Computer (Salvo) Game");
+        Logger::Game("3) Player v Player (Salvo) Game");
         Logger::Game("9) Quit");
         auto input = iohelper::getInputBetweenRange("Enter a option", 1, 9);
+        iohelper::setDefaultFontColor();
+        Game game{};
         switch (input) {
             case 1: {
-                iohelper::setDefaultFontColor();
-                std::cout << "Starting Game..." << std::endl;
-                Game game{};
                 game.setPlayer1(new RealPlayer);
                 game.setPlayer2(new AiPlayer);
                 game.Start();
                 break;
             }
             case 2:{
-                iohelper::setDefaultFontColor();
-                std::cout << "Starting Game..." << std::endl;
-                Game game{};
                 game.setPlayer1(new RealPlayer);
                 game.setPlayer2(new RealPlayer);
                 game.Start();
                 break;
             }
             case 3:{
-                iohelper::setDefaultFontColor();
-                std::cout << "Starting Game..." << std::endl;
-                Game game{};
                 auto* player1 = new RealPlayer;
                 player1->setSalvoMode(true);
                 game.setPlayer1(player1);
                 auto* player2 = new AiPlayer;
+                player2->setSalvoMode(true);
+                game.setPlayer2(player2);
+                game.Start();
+                break;
+            }
+            case 4:{
+                auto* player1 = new RealPlayer;
+                player1->setSalvoMode(true);
+                game.setPlayer1(player1);
+                auto* player2 = new RealPlayer;
                 player2->setSalvoMode(true);
                 game.setPlayer2(player2);
                 game.Start();

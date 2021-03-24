@@ -17,6 +17,8 @@ public:
     void takeTurn() override;
 
     PlayerType type() override;
+
+    void shoot() const;
 };
 
 

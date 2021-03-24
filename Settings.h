@@ -7,6 +7,7 @@
 
 #include "mini.h"
 #include "Models/Board.h"
+#include "Models/Mine.h"
 
 class Settings {
 public:
@@ -15,6 +16,8 @@ public:
 public:
     static Board getBoard();
     static std::vector<Ship> getShips();
+
+    static std::vector<Mine> getMines();
 };
 
 

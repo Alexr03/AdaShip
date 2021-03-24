@@ -20,6 +20,22 @@ void AiPlayer::init() {
 }
 
 void AiPlayer::takeTurn() {
+    if(isSalvoMode()){
+        cout << "[Salvo mode] Grid of the hit ships will show after you fired all missiles.";
+        for(auto &ship : getBoard()->getShips()){
+            if(ship.isDestroyed()) continue;
+
+            cout << "[Salvo mode] You are shooting from ship: " << ship.getName() << endl;
+            shoot();
+        }
+    } else{
+        shoot();
+    }
+
+    iohelper::getInput("Press any key to end computers turn");
+}
+
+void AiPlayer::shoot() const {
     bool validCoord = false;
     string col;
     int row;
@@ -32,10 +48,8 @@ void AiPlayer::takeTurn() {
             cout << "That is an invalid/already hit coordinate" << endl;
         }
     }
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    this_thread::sleep_for(chrono::milliseconds(1000));
     getGame()->HitOpponent(row, col);
-
-    iohelper::getInput("Press any key to end computers turn");
 }
 
 PlayerType AiPlayer::type() {

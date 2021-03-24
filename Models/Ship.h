@@ -16,14 +16,11 @@ class PlayerBoard;
 class Ship : public MapEntity {
 
 private:
-    std::string id;
     std::string name;
     int length{};
-    PlayerBoard *playerBoard;
+    PlayerBoard *playerBoard{};
 public:
     explicit Ship(int id);
-
-    const std::string &getId() const;
 
     bool isInvalid();
 

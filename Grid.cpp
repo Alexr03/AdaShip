@@ -7,6 +7,16 @@
 #include "Constants.h"
 
 void Grid::print() const {
+    for (int i = 0; i < rows; i++) {    /* output labeled grid rows */
+        for (int j = 0; j < cols; j++) {
+            bool hit = coordHit(i + 1, stringhelper::numberToLetters(j + 1));
+            auto mine = mineForCoord(i + 1, stringhelper::numberToLetters(j + 1));
+            if(hit && mine.getId() != Constants::GetInvalidMine().getId()){
+                mine.hit();
+            }
+        }
+    }
+
     std::cout << "\n";                  /* output new line before grid */
     for (int i = 0; i < cols; i++) { /* output column headings */
         auto colLetter = stringhelper::numberToLetters(i + 1);
@@ -30,9 +40,9 @@ void Grid::print() const {
     std::string shipId = " ";
     for (int i = 0; i < rows; i++) {    /* output labeled grid rows */
         for (int j = 0; j < cols; j++) {
+            bool hit = coordHit(i + 1, stringhelper::numberToLetters(j + 1));
             auto ship = shipForCoord(i + 1, stringhelper::numberToLetters(j + 1));
             shipId = shipIdForCoord(i + 1, stringhelper::numberToLetters(j + 1));
-            bool hit = coordHit(i + 1, stringhelper::numberToLetters(j + 1));
             if (hit && ship.isInvalid()) {
                 iohelper::setFontColor(FOREGROUND_YELLOW);
                 shipId = "Ø";
@@ -104,6 +114,18 @@ Ship Grid::shipForCoord(int row, const std::string &col) const {
 }
 
 std::string Grid::shipIdForCoord(int row, const std::string &col) const {
+    for (const auto &mine : getPlayer()->getBoard()->getMines()) {
+        if (mine.getCoordinates().empty()) {
+            continue;
+        }
+
+        for (const auto &coords : mine.getCoordinates()) {
+            if (coords.getRow() == row && coords.getCol() == col) {
+                return "+";
+            }
+        }
+    }
+
     if (Settings::getSettingsFile()["Settings"]["ShowShipsOnGrid"] == "1") {
         for (const auto &ship : getPlayer()->getBoard()->getShips()) {
             if (ship.getCoordinates().empty()) {
@@ -128,4 +150,19 @@ bool Grid::coordHit(int row, const std::string &col) const {
         }
     }
     return false;
+}
+
+Mine Grid::mineForCoord(int row, std::string col) const {
+    for (const auto &mine : getPlayer()->getBoard()->getMines()) {
+        if (mine.getCoordinates().empty()) {
+            continue;
+        }
+
+        for (const auto &coords : mine.getCoordinates()) {
+            if (coords.getRow() == row && coords.getCol() == col) {
+                return mine;
+            }
+        }
+    }
+    return Constants::GetInvalidMine();
 }

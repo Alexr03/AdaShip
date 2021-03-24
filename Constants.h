@@ -14,6 +14,12 @@ public:
         ship.setName("invalid");
         return ship;
     }
+
+    static Mine GetInvalidMine(){
+        Mine mine(10000);
+        mine.setId("invalid");
+        return mine;
+    }
 };
 
 

@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "Settings.h"
+#include "Models/Mine.h"
 
 Board Settings::getBoard() {
     Board board{};
@@ -26,6 +27,18 @@ std::vector<Ship> Settings::getShips() {
         id++;
     }
     return ships;
+}
+
+std::vector<Mine> Settings::getMines() {
+    std::vector<Mine> mines;
+    auto config = getSettingsFile();
+    int id = 1000;
+    for (int i = 0; i < 5; ++i) {
+        Mine mine(id);
+        mines.push_back(mine);
+        id++;
+    }
+    return mines;
 }
 
 mINI::INIStructure Settings::getSettingsFile() {

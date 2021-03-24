@@ -18,6 +18,8 @@ public:
 
 private:
     void takeTurn() override;
+
+    void shoot() const;
 };
 
 

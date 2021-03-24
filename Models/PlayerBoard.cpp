@@ -10,15 +10,34 @@
 #include "../Players/Player.h"
 #include "../Helpers/iohelper.h"
 #include "../Helpers/Logger.h"
+#include "../Constants.h"
 
 const std::vector<Ship> &PlayerBoard::getShips() const {
     return ships;
 }
 
-PlayerBoard::PlayerBoard(Player *player1) : ships(Settings::getShips()), player(player1) {
+PlayerBoard::PlayerBoard(Player *player1) : ships(Settings::getShips()), mines(Settings::getMines()), player(player1) {
     for (auto &ship : ships) {
         ship.setPlayerBoard(this);
     }
+    for (auto &mine : mines) {
+        vector<Coord> coords;
+        bool overlapping = true;
+        mine.setPlayerBoard(this);
+        while(overlapping){
+            coords.clear();
+            int posX = mathshelper::generatePickedNumber(Settings::getBoard().getSizeX());
+            int posY = mathshelper::generatePickedNumber(Settings::getBoard().getSizeY());
+            Logger::Debug("pox: " + to_string(posX));
+            Logger::Debug("poy: " + to_string(posY));
+            coords.emplace_back(posY, stringhelper::numberToLetters(posX));
+            mine.setCoordinates(coords);
+            overlapping = isEntityOverlapping(&mine);
+            Logger::Debug("ID: " + mine.getId() + " | " + to_string(overlapping));
+            Logger::DebugDivider();
+        }
+    }
+
     bool autoPlaceAll = false;
     if (player->type() == Real) {
         auto option = iohelper::getInputBetweenRange("Press 1 to autoplace ships.\nPress 2 to place ships manually.", 1,
@@ -99,7 +118,10 @@ PlayerBoard::PlayerBoard(Player *player1) : ships(Settings::getShips()), player(
                     c.setCoordinates(coords);
                 }
             }
-            overlapped = isShipOverlapping(c);
+            overlapped = isEntityOverlapping(&c);
+            if (overlapped) {
+                Logger::Debug(c.getName() + " is overlapped. Retry.");
+            }
             if (overlapped && autoPlaceAll) {
                 posOrientation = mathshelper::generatePickedNumber(2); // 1 = Horizontal, 2 = Vertical
                 posX = mathshelper::generatePickedNumber(Settings::getBoard().getSizeX());
@@ -118,13 +140,23 @@ const vector<Coord> &PlayerBoard::getHitSpots() const {
     return hitSpots;
 }
 
-bool PlayerBoard::isShipOverlapping(const Ship& ship) {
-    for (const auto &s : ships) {
-        for (const auto& coord : ship.getCoordinates()) {
-            if (ship.getId() == s.getId()) continue;
-            for(const auto &coord2 : s.getCoordinates()){
-                if(coord.getCol() == coord2.getCol() && coord.getRow() == coord2.getRow()){
-                    Logger::Debug("Ship - " + ship.getName() + " is overlapping with ship - " + s.getName());
+bool PlayerBoard::isHitSpot(int row, std::string col) {
+    for (auto &hitSpot : hitSpots) {
+        if (hitSpot.getRow() == row && hitSpot.getCol() == col) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool PlayerBoard::isEntityOverlapping(const MapEntity *entity) {
+    for (const MapEntity &s : ships) {
+        for (const auto &coord : entity->getCoordinates()) {
+            if (entity->getId() == s.getId()) continue;
+            for (const auto &coord2 : s.getCoordinates()) {
+                if (coord.getCol() == coord2.getCol() && coord.getRow() == coord2.getRow()) {
+                    Logger::Debug("Entity - " + entity->getId() + " is overlapping with entity - " + s.getId());
                     return true;
                 }
             }
@@ -133,12 +165,6 @@ bool PlayerBoard::isShipOverlapping(const Ship& ship) {
     return false;
 }
 
-bool PlayerBoard::isHitSpot(int row, std::string col) {
-    for(auto &hitSpot : hitSpots){
-        if(hitSpot.getRow() == row && hitSpot.getCol() == col){
-            return true;
-        }
-    }
-
-    return false;
+const vector<Mine> &PlayerBoard::getMines() const {
+    return mines;
 }

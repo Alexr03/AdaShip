@@ -14,6 +14,19 @@ void RealPlayer::init() {
 }
 
 void RealPlayer::takeTurn() {
+    if(isSalvoMode()){
+        for(auto &ship : getBoard()->getShips()){
+            if(ship.isDestroyed()) continue;
+
+            cout << "[Salvo mode] You are shooting from ship: " << ship.getName() << endl;
+            shoot();
+        }
+    } else{
+        shoot();
+    }
+}
+
+void RealPlayer::shoot() const {
     string col;
     int row;
     bool validCoord = false;
@@ -26,7 +39,7 @@ void RealPlayer::takeTurn() {
                     col += c;
                 }
             }
-            std::transform(col.begin(), col.end(), col.begin(), ::toupper);
+            transform(col.begin(), col.end(), col.begin(), toupper);
             row = stoi(coord.substr(col.size(), coord.size()));
         } else {
             col = stringhelper::numberToLetters(mathshelper::generatePickedNumber(Settings::getBoard().getSizeX()));

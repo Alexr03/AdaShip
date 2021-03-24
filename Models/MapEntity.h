@@ -11,8 +11,17 @@
 
 class MapEntity {
 private:
+    std::string id;
     std::vector<Coord> coordinates;
 public:
+    MapEntity();
+
+    MapEntity(std::string id);
+
+    const std::string &getId() const;
+
+    void setId(const std::string &id);
+
     const std::vector<Coord> &getCoordinates() const;
 
     void setCoordinates(const std::vector<Coord> &coordinates);

@@ -41,11 +41,7 @@ bool Ship::isDestroyed() const {
     return hit == getLength();
 }
 
-Ship::Ship(int id) : id(stringhelper::numberToLetters(id)) {}
-
-const std::string &Ship::getId() const {
-    return id;
-}
+Ship::Ship(int id) : MapEntity(stringhelper::numberToLetters(id)) {}
 
 PlayerBoard *Ship::getPlayerBoard() const {
     return playerBoard;
