@@ -61,37 +61,25 @@ void Menu::start() {
                 break;
             }
             case 5:{
-                auto* player1 = new RealPlayer;
-                player1->setBombsMode(true);
-                player1->init();
+                auto* player1 = new RealPlayer(true);
                 game.setPlayer1(player1);
-                auto* player2 = new AiPlayer;
-                player2->setBombsMode(true);
-                player2->init();
+                auto* player2 = new AiPlayer(true);
                 game.setPlayer2(player2);
                 game.Start();
                 break;
             }
             case 6:{
-                auto* player1 = new RealPlayer;
-                player1->setBombsMode(true);
-                player1->init();
+                auto* player1 = new RealPlayer(true);
                 game.setPlayer1(player1);
-                auto* player2 = new RealPlayer;
-                player2->setBombsMode(true);
-                player2->init();
+                auto* player2 = new RealPlayer(true);
                 game.setPlayer2(player2);
                 game.Start();
                 break;
             }
             case 7:{
-                auto* player1 = new AiPlayer;
-                player1->setBombsMode(true);
-                player1->init();
+                auto* player1 = new AiPlayer(true);
                 game.setPlayer1(player1);
-                auto* player2 = new AiPlayer;
-                player2->setBombsMode(true);
-                player2->init();
+                auto* player2 = new AiPlayer(true);
                 game.setPlayer2(player2);
                 game.Start();
                 break;

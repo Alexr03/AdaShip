@@ -74,3 +74,9 @@ AiPlayer::AiPlayer() : Player() {
     Player::init();
     init();
 }
+
+AiPlayer::AiPlayer(bool bombMode) : Player() {
+    setBombsMode(bombMode);
+    Player::init();
+    init();
+}

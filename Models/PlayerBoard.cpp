@@ -15,6 +15,7 @@ const std::vector<Ship> &PlayerBoard::getShips() const {
 }
 
 PlayerBoard::PlayerBoard(Player *player1) : ships(Settings::getShips()), mines(Settings::getMines()), player(player1) {
+    Logger::Debug("Player1 type - " + to_string(player1->type()));
     if(!player->isBombsMode()){
         mines.clear();
     }

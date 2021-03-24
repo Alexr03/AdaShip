@@ -12,6 +12,8 @@ class RealPlayer : public Player {
 public:
     RealPlayer();
 
+    RealPlayer(bool bombMode);
+
     PlayerType type() override;
 
     void init() override;

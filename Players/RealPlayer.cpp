@@ -75,6 +75,12 @@ RealPlayer::RealPlayer() : Player() {
     init();
 }
 
+RealPlayer::RealPlayer(bool bombMode) : Player() {
+    setBombsMode(bombMode);
+    Player::init();
+    init();
+}
+
 PlayerType RealPlayer::type() {
     return Real;
 }

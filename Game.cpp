@@ -22,6 +22,9 @@ void Game::Start() {
 
     gameGrid.setGame(this);
     gameGrid.setPlayer(activePlayer);
+
+//    player1->init();
+//    player2->init();
 //    gameGrid.print();
     while(true){
         iohelper::clearScreen();

@@ -12,6 +12,8 @@ class AiPlayer : public Player {
 public:
     AiPlayer();
 
+    AiPlayer(bool bombMode);
+
     void init() override;
 
     void takeTurn() override;
