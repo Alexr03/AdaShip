@@ -48,7 +48,7 @@ void AiPlayer::shoot() const {
             cout << "That is an invalid/already hit coordinate" << endl;
         }
     }
-    this_thread::sleep_for(chrono::milliseconds(1000));
+//    this_thread::sleep_for(chrono::milliseconds(1000));
     getGame()->HitOpponent(row, col);
     auto opponent = getGame()->getOpponentPlayer();
     for(const Mine& mine : opponent->getBoard()->getMines()){

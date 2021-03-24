@@ -112,17 +112,16 @@ Ship Grid::shipForCoord(int row, const std::string &col) const {
 }
 
 std::string Grid::shipIdForCoord(int row, const std::string &col) const {
-    for (const auto &mine : getPlayer()->getBoard()->getMines()) {
-        if (mine.getCoordinates().empty()) {
-            continue;
-        }
+    if (Settings::getSettingsFile()["Settings"]["ShowBombsOnGrid"] == "1") {
+        for (const auto &mine : getPlayer()->getBoard()->getMines()) {
+            if (mine.getCoordinates().empty()) {
+                continue;
+            }
 
-        for (const auto &coords : mine.getCoordinates()) {
-            if (coords.getRow() == row && coords.getCol() == col) {
-                if(Settings::getSettingsFile()["Settings"]["ShowBombsOnGrid"] == "1"){
+            for (const auto &coords : mine.getCoordinates()) {
+                if (coords.getRow() == row && coords.getCol() == col) {
                     return "+";
                 }
-                return "";
             }
         }
     }
