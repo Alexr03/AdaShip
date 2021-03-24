@@ -23,8 +23,17 @@ Below the image will show you the UML diagram of this project.
     - [x] Size Y
   - [x] Ship Configurations
     - [x] ShipName=Length
+  - [x] Settings
+    - [x] Debugging Model
+    - [x] Show Ships on Grid
+    - [x] Show Bombs on Grid
 - [x] Main Menu
   - [x] Player vs Computer
+  - [x] Player vs Player
+  - [x] Player vs Computer (Salvo mode)
+  - [x] Player vs Player (Salvo mode)
+  - [x] Player vs Computer (Bombs)
+  - [x] Player vs Player (Bombs)
   - [x] Quit
 - [x] Ship Placements
   - [x] Automatic
@@ -115,3 +124,62 @@ method isn't for Player to implement the logic. But for derived classes to. E.G.
  - `AiPlayer::takeTurn()` This will override the `Player::takeTurn()` method but instead of taking user input it will instead use a simple
    algorithm to select a row and column on the grid. It will then use these values to do the other same logic to shoot into a location.
    This is sort of like emulating what the user is doing. 
+   
+## Evaluation
+### Analysis with Embedded Examples Of Key Code Refactoring.
+#### `Grid::IsEntityOverlapping(MapEntity &entity)`
+This method was created after many iterations of a previous method that was called `Grid::IsShipOverlapping(Ship &ship)` this method
+used to only check collisions of a ship with other ships. As I was progressing and decided to go for distinction level, I needed to implement
+overlap checking with other entities like bombs. To do this I created a new method called `IsEntityOverlapping`, you provide this method with any object
+that inherits "MapEntity" this works because MapEntity contains the coordinates of the entity which is what this method is using. This way
+I can check all MapEntities in the board to check for overlapping all with one line of code that returns true/false.
+
+#### `MapEntity` Object
+This object contains the essentials for an entity to be shown on the grid. Specifically the coordinates grid.
+Before this object was implemented every entity used to contain their own vector of coordinates that had to be defined in every object
+that was considered to be a map entity. This was very bad as, as in the above method I would need to remake it for every type and run against every
+other entity. This would be cumbersome, so inheriting from MapEntity and allowing me to pass in any object to the method above makes this super
+easy to use.
+
+### Implementation and Effective Use of Advanced Programming
+#### Forward Declaration of Classes (Circular Dependencies)
+I had to make use for forward declarations in some classes for my code to compile. This made it easy to reference objects that referenced the current object.
+E.G. `Player` has a property for `PlayerBoard` but we also want to access this backwards, we want to access `Player` from `PlayerBoard`. 
+We cannot do this by just referencing it and setting it via a setter or the constructor. Doing this will cause a circular reference dependency
+stopping the program from compiling. To fix this I had forward declared the `Player` class in the `PlayerBoard`. And then in the `PlayerBoard.cpp` file
+I use the `#include` definer, to include the real `PlayerBoard` this will allow me to use the `PlayerBoard` methods/properties/fields, etc.
+I can then also use a setter or even the constructor to set this property from the player by simply doing something like `player.SetPlayerBoard(this)`.
+
+### Features Showcase
+ - Color Console
+    - Red for hit ship
+    - Yellow for missed ship
+ - Bombs
+    - Option for a game with bombs
+    - Symbol for bombs on grid
+ - Icons
+    - Icon for bombs
+    - Icon for ship (ID)
+    - Icon for missed missile position
+    - Icon for hit missile position
+ - GameModes
+    - Player v Computer
+    - Player v Player
+    - Computer v Computer
+ - Customizable
+    - Highly customizable .ini file
+    - Unlimited Ships (Works by giving the ships a unique ID, based on their position in the .ini file)
+    - Unlimited Grid Size (Providing your screen is wide enough OR your terminal supports side-to-side scrolling)
+    - Customizable ship lengths
+    - Ability to see ships on the board via .ini file
+    - Ability to see bombs on the board via .ini file
+    
+### Improved Targeting Algorithm
+N/A (See below)
+
+### Reflective Review
+#### Targeting Algorithm
+Due to some time restraints I could not implement a improved targeting algorithm in time for the deadline. However I do have an idea on
+how I could implement something like this. Implementation of this "mode" would be easy to do, I can create another menu option to set the mode
+of the AI. If this mode was set to e.g. "Advanced" I would instead create a new instance of a new Player Object called "AdvancedAiPlayer"
+which would inherit "AiPlayer" so it has its custom functions to do specific AI related stuff from the normal AI. 

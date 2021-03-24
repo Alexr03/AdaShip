@@ -24,6 +24,8 @@ void RealPlayer::takeTurn() {
     } else{
         shoot();
     }
+
+    iohelper::getInput("Press any key to end turn");
 }
 
 void RealPlayer::shoot() const {
