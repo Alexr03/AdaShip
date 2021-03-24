@@ -6,20 +6,15 @@
 #include "PlayerBoard.h"
 #include "../Settings.h"
 #include "../Helpers/mathshelper.h"
-#include "../Helpers/stringhelper.h"
 #include "../Players/Player.h"
 #include "../Helpers/iohelper.h"
 #include "../Helpers/Logger.h"
-#include "../Constants.h"
 
 const std::vector<Ship> &PlayerBoard::getShips() const {
     return ships;
 }
 
 PlayerBoard::PlayerBoard(Player *player1) : ships(Settings::getShips()), mines(Settings::getMines()), player(player1) {
-    for (auto &ship : ships) {
-        ship.setPlayerBoard(this);
-    }
     for (auto &mine : mines) {
         vector<Coord> coords;
         bool overlapping = true;
@@ -47,6 +42,7 @@ PlayerBoard::PlayerBoard(Player *player1) : ships(Settings::getShips()), mines(S
         autoPlaceAll = true;
     }
     for (auto &c : ships) {
+        c.setPlayerBoard(this);
         vector<Coord> coords;
         int posOrientation = 1;
         int posX = 1;
@@ -133,7 +129,16 @@ PlayerBoard::PlayerBoard(Player *player1) : ships(Settings::getShips()), mines(S
 }
 
 void PlayerBoard::hitSpot(int row, string col) {
-    hitSpots.emplace_back(row, col);
+    bool exists = false;
+    for(auto &spot : hitSpots){
+        if(spot.getRow() == row && spot.getCol() == col){
+            exists = true;
+        }
+    }
+
+    if(!exists){
+        hitSpots.emplace_back(row, col);
+    }
 }
 
 const vector<Coord> &PlayerBoard::getHitSpots() const {

@@ -33,7 +33,7 @@ std::vector<Mine> Settings::getMines() {
     std::vector<Mine> mines;
     auto config = getSettingsFile();
     int id = 1000;
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < stoi(getSettingsFile()["Boards"]["Bombs"]); ++i) {
         Mine mine(id);
         mines.push_back(mine);
         id++;

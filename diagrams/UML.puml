@@ -10,6 +10,7 @@ class AiPlayer {
 	+AiPlayer()
 	+type() : PlayerType
 	+init() : void
+	+shoot() : void {query}
 	+takeTurn() : void
 }
 
@@ -25,6 +26,7 @@ class Board {
 
 
 class Constants {
+	+{static} GetInvalidMine() : Mine
 	+{static} GetInvalidShip() : Ship
 }
 
@@ -41,11 +43,12 @@ class Coord {
 class Game {
 	+Game()
 	+getGameGrid() : Grid& {query}
-	+GeneratePlayer() : Player*
 	+getActivePlayer() : Player* {query}
 	+getOpponentPlayer() : Player* {query}
 	+getPlayer1() : Player* {query}
 	+getPlayer2() : Player* {query}
+	+isSalvoMode() : bool {query}
+	-salvoMode : bool
 	+DisplayAllGrids() : void
 	+DisplayOpponentGrid() : void
 	+HitOpponent(int row, std::string col) : void
@@ -57,10 +60,12 @@ class Game {
 	+setGameGrid(const Grid& gameGrid) : void
 	+setPlayer1(Player* player1) : void
 	+setPlayer2(Player* player2) : void
+	+setSalvoMode(bool salvoMode) : void
 }
 
 
 class Grid {
+	+mineForCoord(int i, std::string basicString) : Mine {query}
 	+getPlayer() : Player* {query}
 	-player : Player*
 	+shipForCoord(int row, const std::string& col) : Ship {query}
@@ -81,9 +86,14 @@ class Logger {
 
 
 class MapEntity {
+	+MapEntity()
+	+MapEntity(std::string id)
+	-id : std::string
+	+getId() : std::string& {query}
 	-coordinates : std::vector<Coord>
 	+getCoordinates() : std::vector<Coord>& {query}
 	+setCoordinates(const std::vector<Coord>& coordinates) : void
+	+setId(const std::string& id) : void
 }
 
 
@@ -93,12 +103,23 @@ class Menu {
 }
 
 
+class Mine {
+	+Mine(int id)
+	+getPlayerBoard() : PlayerBoard* {query}
+	-playerBoard : PlayerBoard*
+	-exploded : bool
+	+hit() : void
+	+setPlayerBoard(PlayerBoard* playerBoard) : void
+}
+
+
 class PlayerBoard {
 	+PlayerBoard(Player* player1)
+	+isEntityOverlapping(const MapEntity* entity) : bool
 	+isHitSpot(int row, std::string col) : bool
-	+isShipOverlapping(const Ship& ship) : bool
 	-hitSpots : std::vector<Coord>
 	+getHitSpots() : std::vector<Coord>& {query}
+	+getMines() : std::vector<Mine>& {query}
 	+getShips() : std::vector<Ship>& {query}
 	+hitSpot(int row, std::string col) : void
 }
@@ -108,6 +129,7 @@ class RealPlayer {
 	+RealPlayer()
 	+type() : PlayerType
 	+init() : void
+	-shoot() : void {query}
 	-takeTurn() : void
 }
 
@@ -115,6 +137,7 @@ class RealPlayer {
 class Settings {
 	+{static} getBoard() : Board
 	+{static} getSettingsFile() : mINI::INIStructure
+	+{static} getMines() : std::vector<Mine>
 	+{static} getShips() : std::vector<Ship>
 }
 
@@ -122,13 +145,10 @@ class Settings {
 class Ship {
 	+Ship(int id)
 	+getPlayerBoard() : PlayerBoard* {query}
-	-playerBoard : PlayerBoard*
 	+isDestroyed() : bool {query}
 	+isInvalid() : bool
 	+getLength() : int {query}
-	-id : std::string
 	-name : std::string
-	+getId() : std::string& {query}
 	+getName() : std::string& {query}
 	+setLength(int length) : void
 	+setName(const std::string& name) : void
@@ -190,9 +210,12 @@ class Player {
 	+getGame() : Game* {query}
 	+getBoard() : PlayerBoard* {query}
 	+type() : PlayerType
+	+isSalvoMode() : bool {query}
+	-salvoMode : bool
 	+init() : void
 	+setBoard(PlayerBoard* board) : void
 	+setGame(Game* game) : void
+	+setSalvoMode(bool salvoMode) : void
 	+takeTurn() : void
 }
 
@@ -272,6 +295,9 @@ namespace mINI {
 .Board <|-- .PlayerBoard
 
 
+.MapEntity <|-- .Mine
+
+
 .MapEntity <|-- .Ship
 
 
@@ -292,13 +318,13 @@ namespace mINI {
 .MapEntity *-- .Coord
 
 
+.Mine o-- .PlayerBoard
+
+
 .Player o-- .Game
 
 
 .PlayerBoard *-- .Coord
-
-
-.Ship o-- .PlayerBoard
 
 
 
@@ -346,6 +372,9 @@ mINI.INIMap <.. mINI.INIWriter
 mINI.INIMap <.. mINI.INIWriter
 
 
+.MapEntity <.. .PlayerBoard
+
+
 .Player <.. .Game
 
 
@@ -361,16 +390,16 @@ mINI.INIMap <.. mINI.INIWriter
 .Player <.. .Grid
 
 
+.Player <.. .Mine
+
+
+.Player <.. .Player
+
+
 .Player <.. .PlayerBoard
 
 
-.PlayerBoard <.. .Player
-
-
-.PlayerBoard <.. .Ship
-
-
-.Ship <.. .PlayerBoard
+.Player <.. .Ship
 
 
 

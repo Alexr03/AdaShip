@@ -52,6 +52,16 @@ void RealPlayer::shoot() const {
         }
     }
     getGame()->HitOpponent(row, col);
+    auto opponent = getGame()->getOpponentPlayer();
+    for(const Mine& mine : opponent->getBoard()->getMines()){
+        if(opponent->getBoard()->isHitSpot(mine.getCoordinates().front().getRow(), mine.getCoordinates().front().getCol())){
+            auto baseCoord = mine.getCoordinates().front();
+            getGame()->HitOpponent(baseCoord.getRow(), stringhelper::numberToLetters(stringhelper::lettersToNumber(baseCoord.getCol()) - 1));
+            getGame()->HitOpponent(baseCoord.getRow(), stringhelper::numberToLetters(stringhelper::lettersToNumber(baseCoord.getCol()) + 1));
+            getGame()->HitOpponent(baseCoord.getRow() - 1, stringhelper::numberToLetters(stringhelper::lettersToNumber(baseCoord.getCol())));
+            getGame()->HitOpponent(baseCoord.getRow() + 1, stringhelper::numberToLetters(stringhelper::lettersToNumber(baseCoord.getCol())));
+        }
+    }
 }
 
 RealPlayer::RealPlayer() : Player() {

@@ -7,15 +7,11 @@
 #include "Constants.h"
 
 void Grid::print() const {
-    for (int i = 0; i < rows; i++) {    /* output labeled grid rows */
-        for (int j = 0; j < cols; j++) {
-            bool hit = coordHit(i + 1, stringhelper::numberToLetters(j + 1));
-            auto mine = mineForCoord(i + 1, stringhelper::numberToLetters(j + 1));
-            if(hit && mine.getId() != Constants::GetInvalidMine().getId()){
-                mine.hit();
-            }
-        }
-    }
+//    for (int i = 0; i < rows; i++) {    /* output labeled grid rows */
+//        for (int j = 0; j < cols; j++) {
+//            bool hit = coordHit(i + 1, stringhelper::numberToLetters(j + 1));
+//        }
+//    }
 
     std::cout << "\n";                  /* output new line before grid */
     for (int i = 0; i < cols; i++) { /* output column headings */
@@ -43,16 +39,18 @@ void Grid::print() const {
             bool hit = coordHit(i + 1, stringhelper::numberToLetters(j + 1));
             auto ship = shipForCoord(i + 1, stringhelper::numberToLetters(j + 1));
             shipId = shipIdForCoord(i + 1, stringhelper::numberToLetters(j + 1));
-            if (hit && ship.isInvalid()) {
-                iohelper::setFontColor(FOREGROUND_YELLOW);
-                shipId = "Ø";
-            } else if (hit) {
+            if(hit){
                 iohelper::setFontColor(FOREGROUND_RED);
                 shipId = "*";
-                if (ship.isDestroyed()) {
+//                cout << ship.getName() << " des: " << to_string(ship.isDestroyed());
+                if (ship.isInvalid()) {
+                    iohelper::setFontColor(FOREGROUND_YELLOW);
+                    shipId = "Ø";
+                } else if (ship.isDestroyed()) {
                     shipId = "▓";
                 }
             }
+
             if (!j) {
                 std::cout << std::setw(3) << i + 1 << " |  ";
                 cout << shipId;
@@ -165,4 +163,12 @@ Mine Grid::mineForCoord(int row, std::string col) const {
         }
     }
     return Constants::GetInvalidMine();
+}
+
+Game *Grid::getGame() const {
+    return game;
+}
+
+void Grid::setGame(Game *game) {
+    Grid::game = game;
 }

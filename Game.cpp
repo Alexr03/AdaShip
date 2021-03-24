@@ -20,6 +20,7 @@ void Game::Start() {
     activePlayer = player1;
     iohelper::clearScreen();
 
+    gameGrid.setGame(this);
     gameGrid.setPlayer(activePlayer);
 //    gameGrid.print();
     while(true){

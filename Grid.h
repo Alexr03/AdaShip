@@ -14,6 +14,7 @@
 class Grid {
     int rows = Settings::getBoard().getSizeX(), cols = Settings::getBoard().getSizeY();
     Player* player;
+    Game* game;
 public:
     Player *getPlayer() const;
 
@@ -28,6 +29,10 @@ public:
     bool coordHit(int row, const std::string &col) const;
 
     Mine mineForCoord(int i, std::string basicString) const;
+
+    Game *getGame() const;
+
+    void setGame(Game *game);
 };
 
 #endif //ADASHIP2_GRID_H

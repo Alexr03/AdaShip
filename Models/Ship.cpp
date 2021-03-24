@@ -7,6 +7,7 @@
 #include "../Settings.h"
 #include "../Models/PlayerBoard.h"
 #include <algorithm>
+#include <iostream>
 
 bool Ship::isInvalid() {
     return Ship::name == "invalid";
@@ -31,14 +32,15 @@ void Ship::setLength(int length) {
 bool Ship::isDestroyed() const {
     auto hitSpots = playerBoard->getHitSpots();
     int hit = 0;
-    for (const auto &hitSpot : hitSpots) {
-        for (const auto &coord : getCoordinates()){
+    for (const auto &coord : getCoordinates()){
+        for (const auto &hitSpot : hitSpots) {
             if(hitSpot.getCol() == coord.getCol() && hitSpot.getRow() == coord.getRow()){
-                hit++;
+                ++hit;
             }
         }
     }
-    return hit == getLength();
+//    std::cout << getName() << ":" << std::to_string(hit) << "-" << std::to_string(getLength()) << std::endl;
+    return hit >= getLength();
 }
 
 Ship::Ship(int id) : MapEntity(stringhelper::numberToLetters(id)) {}

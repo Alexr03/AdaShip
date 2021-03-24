@@ -15,7 +15,7 @@ private:
     Player *player{};
     std::vector<Ship> ships{};
     std::vector<Mine> mines{};
-    std::vector<Coord> hitSpots;
+    std::vector<Coord> hitSpots{};
 
 public:
     explicit PlayerBoard(Player *player1);
