@@ -20,6 +20,9 @@ void Menu::start() {
         Logger::Game("2) Player v Player Game");
         Logger::Game("3) Player v Computer (Salvo) Game");
         Logger::Game("4) Player v Player (Salvo) Game");
+        Logger::Game("5) Player v Computer (hidden mines) Game");
+        Logger::Game("6) Player v Player (hidden mines) Game");
+        Logger::Game("7) Computer v Computer (hidden mines) Game");
         Logger::Game("9) Quit");
         auto input = iohelper::getInputBetweenRange("Enter a option", 1, 9);
         iohelper::setDefaultFontColor();
@@ -53,6 +56,42 @@ void Menu::start() {
                 game.setPlayer1(player1);
                 auto* player2 = new RealPlayer;
                 player2->setSalvoMode(true);
+                game.setPlayer2(player2);
+                game.Start();
+                break;
+            }
+            case 5:{
+                auto* player1 = new RealPlayer;
+                player1->setBombsMode(true);
+                player1->init();
+                game.setPlayer1(player1);
+                auto* player2 = new AiPlayer;
+                player2->setBombsMode(true);
+                player2->init();
+                game.setPlayer2(player2);
+                game.Start();
+                break;
+            }
+            case 6:{
+                auto* player1 = new RealPlayer;
+                player1->setBombsMode(true);
+                player1->init();
+                game.setPlayer1(player1);
+                auto* player2 = new RealPlayer;
+                player2->setBombsMode(true);
+                player2->init();
+                game.setPlayer2(player2);
+                game.Start();
+                break;
+            }
+            case 7:{
+                auto* player1 = new AiPlayer;
+                player1->setBombsMode(true);
+                player1->init();
+                game.setPlayer1(player1);
+                auto* player2 = new AiPlayer;
+                player2->setBombsMode(true);
+                player2->init();
                 game.setPlayer2(player2);
                 game.Start();
                 break;

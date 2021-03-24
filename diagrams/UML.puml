@@ -65,6 +65,8 @@ class Game {
 
 
 class Grid {
+	-game : Game*
+	+getGame() : Game* {query}
 	+mineForCoord(int i, std::string basicString) : Mine {query}
 	+getPlayer() : Player* {query}
 	-player : Player*
@@ -73,6 +75,7 @@ class Grid {
 	-rows : int
 	+shipIdForCoord(int row, const std::string& col) : std::string {query}
 	+print() : void {query}
+	+setGame(Game* game) : void
 	+setPlayer(Player*& player) : void
 }
 
@@ -117,7 +120,6 @@ class PlayerBoard {
 	+PlayerBoard(Player* player1)
 	+isEntityOverlapping(const MapEntity* entity) : bool
 	+isHitSpot(int row, std::string col) : bool
-	-hitSpots : std::vector<Coord>
 	+getHitSpots() : std::vector<Coord>& {query}
 	+getMines() : std::vector<Mine>& {query}
 	+getShips() : std::vector<Ship>& {query}
@@ -210,10 +212,13 @@ class Player {
 	+getGame() : Game* {query}
 	+getBoard() : PlayerBoard* {query}
 	+type() : PlayerType
+	-bombsMode : bool
+	+isBombsMode() : bool {query}
 	+isSalvoMode() : bool {query}
 	-salvoMode : bool
 	+init() : void
 	+setBoard(PlayerBoard* board) : void
+	+setBombsMode(bool bombsMode) : void
 	+setGame(Game* game) : void
 	+setSalvoMode(bool salvoMode) : void
 	+takeTurn() : void
@@ -312,6 +317,9 @@ namespace mINI {
 
 /' Aggregation relationships '/
 
+.Grid o-- .Game
+
+
 .Grid o-- .Player
 
 
@@ -324,9 +332,6 @@ namespace mINI {
 .Player o-- .Game
 
 
-.PlayerBoard *-- .Coord
-
-
 
 
 
@@ -337,6 +342,9 @@ namespace mINI {
 
 
 .Coord <.. .MapEntity
+
+
+.Game <.. .Grid
 
 
 .Game <.. .Player
@@ -390,16 +398,16 @@ mINI.INIMap <.. mINI.INIWriter
 .Player <.. .Grid
 
 
-.Player <.. .Mine
-
-
-.Player <.. .Player
-
-
 .Player <.. .PlayerBoard
 
 
-.Player <.. .Ship
+.PlayerBoard <.. .Mine
+
+
+.PlayerBoard <.. .Player
+
+
+.PlayerBoard <.. .Ship
 
 
 

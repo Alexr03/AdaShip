@@ -6,8 +6,6 @@
 #include "../Helpers/stringhelper.h"
 #include "../Settings.h"
 #include "../Models/PlayerBoard.h"
-#include <algorithm>
-#include <iostream>
 
 bool Ship::isInvalid() {
     return Ship::name == "invalid";

@@ -12,11 +12,8 @@
 class Settings {
 public:
     static mINI::INIStructure getSettingsFile();
-
-public:
     static Board getBoard();
     static std::vector<Ship> getShips();
-
     static std::vector<Mine> getMines();
 };
 

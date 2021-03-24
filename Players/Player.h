@@ -17,6 +17,7 @@ private:
     PlayerBoard* board{};
     Game* game;
     bool salvoMode = false;
+    bool bombsMode = false;
 public:
     Player() {}
 
@@ -38,6 +39,10 @@ public:
     bool isSalvoMode() const;
 
     void setSalvoMode(bool salvoMode);
+
+    bool isBombsMode() const;
+
+    void setBombsMode(bool bombsMode);
 };
 
 #endif //ADASHIP2_PLAYER_H

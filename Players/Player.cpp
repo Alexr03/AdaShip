@@ -40,3 +40,11 @@ bool Player::isSalvoMode() const {
 void Player::setSalvoMode(bool salvoMode) {
     Player::salvoMode = salvoMode;
 }
+
+bool Player::isBombsMode() const {
+    return bombsMode;
+}
+
+void Player::setBombsMode(bool bombsMode) {
+    Player::bombsMode = bombsMode;
+}
