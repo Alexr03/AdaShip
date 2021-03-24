@@ -1,5 +1,6 @@
 # AdaShip
 
+# NOTE: DEBUG MODE CAN BE ENABLED/DISABLED IN THE ADASHIP_CONFIG.INI FILE
 Repl.IT Project URL: https://replit.com/@alexr03/AdaShip
 
 ## Challenge Outline
