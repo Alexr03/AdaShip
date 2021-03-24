@@ -41,7 +41,7 @@ void RealPlayer::shoot() const {
                     col += c;
                 }
             }
-            transform(col.begin(), col.end(), col.begin(), toupper);
+            transform(col.begin(), col.end(), col.begin(), ::toupper);
             row = stoi(coord.substr(col.size(), coord.size()));
         } else {
             col = stringhelper::numberToLetters(mathshelper::generatePickedNumber(Settings::getBoard().getSizeX()));
