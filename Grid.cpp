@@ -119,7 +119,10 @@ std::string Grid::shipIdForCoord(int row, const std::string &col) const {
 
         for (const auto &coords : mine.getCoordinates()) {
             if (coords.getRow() == row && coords.getCol() == col) {
-                return "+";
+                if(Settings::getSettingsFile()["Settings"]["ShowBombsOnGrid"] == "1"){
+                    return "+";
+                }
+                return "";
             }
         }
     }
@@ -148,21 +151,6 @@ bool Grid::coordHit(int row, const std::string &col) const {
         }
     }
     return false;
-}
-
-Mine Grid::mineForCoord(int row, std::string col) const {
-    for (const auto &mine : getPlayer()->getBoard()->getMines()) {
-        if (mine.getCoordinates().empty()) {
-            continue;
-        }
-
-        for (const auto &coords : mine.getCoordinates()) {
-            if (coords.getRow() == row && coords.getCol() == col) {
-                return mine;
-            }
-        }
-    }
-    return Constants::GetInvalidMine();
 }
 
 Game *Grid::getGame() const {

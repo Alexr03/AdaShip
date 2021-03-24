@@ -58,6 +58,10 @@ void AiPlayer::shoot() const {
             getGame()->HitOpponent(baseCoord.getRow(), stringhelper::numberToLetters(stringhelper::lettersToNumber(baseCoord.getCol()) + 1));
             getGame()->HitOpponent(baseCoord.getRow() - 1, stringhelper::numberToLetters(stringhelper::lettersToNumber(baseCoord.getCol())));
             getGame()->HitOpponent(baseCoord.getRow() + 1, stringhelper::numberToLetters(stringhelper::lettersToNumber(baseCoord.getCol())));
+            getGame()->HitOpponent(baseCoord.getRow() - 1, stringhelper::numberToLetters(stringhelper::lettersToNumber(baseCoord.getCol()) - 1));
+            getGame()->HitOpponent(baseCoord.getRow() + 1, stringhelper::numberToLetters(stringhelper::lettersToNumber(baseCoord.getCol()) + 1));
+            getGame()->HitOpponent(baseCoord.getRow() - 1, stringhelper::numberToLetters(stringhelper::lettersToNumber(baseCoord.getCol()) + 1));
+            getGame()->HitOpponent(baseCoord.getRow() + 1, stringhelper::numberToLetters(stringhelper::lettersToNumber(baseCoord.getCol()) - 1));
         }
     }
 }
