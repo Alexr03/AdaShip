@@ -15,11 +15,10 @@ private:
     Player* player2{};
     Player* activePlayer{};
     Grid gameGrid{};
+    bool salvoMode = false;
 
 public:
     Game();
-
-    Player* GeneratePlayer();
 
     void Start();
 
@@ -52,6 +51,10 @@ public:
     void setGameGrid(const Grid &gameGrid);
 
     Player *getOpponentPlayer() const;
+
+    bool isSalvoMode() const;
+
+    void setSalvoMode(bool salvoMode);
 };
 
 

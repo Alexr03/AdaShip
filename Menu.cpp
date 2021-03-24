@@ -18,7 +18,7 @@ void Menu::start() {
         Logger::Divider();
         Logger::Game("1) Player v Computer Game");
         Logger::Game("2) Player v Player Game");
-        Logger::Game("3) Computer v Computer Game");
+        Logger::Game("3) Player v Computer (Salvo) Game");
         Logger::Game("9) Quit");
         auto input = iohelper::getInputBetweenRange("Enter a option", 1, 9);
         switch (input) {
@@ -44,8 +44,12 @@ void Menu::start() {
                 iohelper::setDefaultFontColor();
                 std::cout << "Starting Game..." << std::endl;
                 Game game{};
-                game.setPlayer1(new AiPlayer);
-                game.setPlayer2(new AiPlayer);
+                auto* player1 = new RealPlayer;
+                player1->setSalvoMode(true);
+                game.setPlayer1(player1);
+                auto* player2 = new AiPlayer;
+                player2->setSalvoMode(true);
+                game.setPlayer2(player2);
                 game.Start();
                 break;
             }

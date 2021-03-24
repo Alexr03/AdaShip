@@ -32,3 +32,11 @@ Game *Player::getGame() const {
 void Player::setGame(Game *game) {
     Player::game = game;
 }
+
+bool Player::isSalvoMode() const {
+    return salvoMode;
+}
+
+void Player::setSalvoMode(bool salvoMode) {
+    Player::salvoMode = salvoMode;
+}

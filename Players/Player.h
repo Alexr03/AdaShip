@@ -16,6 +16,7 @@ struct Player {
 private:
     PlayerBoard* board{};
     Game* game;
+    bool salvoMode = false;
 public:
     Player() {}
 
@@ -33,6 +34,10 @@ public:
     Game *getGame() const;
 
     void setGame(Game *game);
+
+    bool isSalvoMode() const;
+
+    void setSalvoMode(bool salvoMode);
 };
 
 #endif //ADASHIP2_PLAYER_H

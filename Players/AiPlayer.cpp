@@ -8,6 +8,7 @@
 #include "../Helpers/mathshelper.h"
 #include "../Settings.h"
 #include "../Game.h"
+#include "../Helpers/iohelper.h"
 #include <chrono>
 #include <thread>
 
@@ -33,6 +34,8 @@ void AiPlayer::takeTurn() {
     }
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     getGame()->HitOpponent(row, col);
+
+    iohelper::getInput("Press any key to end computers turn");
 }
 
 PlayerType AiPlayer::type() {

@@ -5,11 +5,8 @@
 #include <iostream>
 #include <utility>
 #include "Game.h"
-#include "Players/RealPlayer.h"
 #include "Helpers/iohelper.h"
-#include "Grid.h"
 #include "Helpers/Logger.h"
-#include "Players/AiPlayer.h"
 
 int currentPlayer = 1;
 
