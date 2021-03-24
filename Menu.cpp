@@ -107,6 +107,3 @@ void Menu::start() {
         }
     }
 }
-
-void Menu::settingsMenu() {
-}

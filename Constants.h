@@ -9,12 +9,15 @@
 
 class Constants {
 public:
+    /// Creates an instance of an invalid ship, that we can test against if a coordinate returns a invalid ship
+    /// \return
     static Ship GetInvalidShip(){
         Ship ship(999);
         ship.setName("invalid");
         return ship;
     }
 
+    /// Creates an instance of an invalid mine, that we can test against if a coordinate returns a invalid mine
     static Mine GetInvalidMine(){
         Mine mine(10000);
         mine.setId("invalid");

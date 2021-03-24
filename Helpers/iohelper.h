@@ -21,18 +21,21 @@ public:
     /// \return The user input that was validated against the regex.
     static std::string getInput(string question = "", const string& regex = "");
 
-    /// Print formatted text to the screen where spacing is defined
-    /// \tparam T Text to print
-    /// \param t Text to print
-    /// \param width The width to give the text
-    static void printElement(const string& t, const int &width);
-
+    /// Set the font color of the console back to default
     static void setDefaultFontColor();
 
+    ///Clear the screen on a supported terminal
     static void clearScreen();
 
+    /// Take user input of an integer between a range
+    /// \param question Question to ask user
+    /// \param lowerRange Lower range (inclusive)
+    /// \param higherRange Higher range (inclusive)
+    /// \return
     static int getInputBetweenRange(string question, int lowerRange, int higherRange);
 
+    /// Set the font color of the console
+    /// \param code Color
     static void setFontColor(ConsoleColor code);
 };
 

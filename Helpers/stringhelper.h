@@ -10,20 +10,14 @@
 
 class stringhelper {
 public:
-    static void ltrim(std::string &s);
-
-    static void rtrim(std::string &s);
-
-    static void trim(std::string &s);
-
-    static std::string ltrim_copy(std::string s);
-
-    static std::string rtrim_copy(std::string s);
-
-    static std::string trim_copy(std::string s);
-
+    /// Convert a number to an excel-like column name
+    /// \param num Number to convert
+    /// \return Letter(s) that the number corresponds to.
     static std::string numberToLetters(int num);
 
+    /// Convert excel column name to number equivalent.
+    /// \param s Letter(s) to convert
+    /// \return Number that the letter(s) correspond to.
     static int lettersToNumber(std::string s);
 };
 

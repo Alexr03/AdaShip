@@ -16,12 +16,16 @@ private:
     PlayerBoard *playerBoard;
 
 public:
+    /// Initialize mine with integer ID and convert to excel-like column ID
+    /// \param id
     Mine(int id) : MapEntity(stringhelper::numberToLetters(id)) {}
 
-    void hit();
-
+    /// Get Player board this mine is on.
+    /// \return
     PlayerBoard *getPlayerBoard() const;
 
+    /// Set playerboard this mine is on
+    /// \param playerBoard
     void setPlayerBoard(PlayerBoard *playerBoard);
 };
 

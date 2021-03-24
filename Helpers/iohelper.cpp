@@ -25,11 +25,6 @@ std::string iohelper::getInput(string question, const string &regex) {
     }
 }
 
-void iohelper::printElement(const string &t, const int &width) {
-    const char separator = ' ';
-    cout << left << setw(width) << setfill(separator) << t;
-}
-
 void iohelper::setFontColor(ConsoleColor code) {
     switch (code) {
         case FOREGROUND_BLACK:

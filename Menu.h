@@ -8,9 +8,8 @@
 
 class Menu {
 public:
+    /// Code to execute when to start the menu
     static void start();
-
-    void settingsMenu();
 };
 
 

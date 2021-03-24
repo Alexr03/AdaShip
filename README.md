@@ -1,5 +1,7 @@
 # AdaShip
 
+Repl.IT Project URL: https://replit.com/@alexr03/AdaShip
+
 ## Challenge Outline
 This is an assignment provided by Ada. Its purpose is to provide a console-style based game of "battleships".
 
@@ -183,3 +185,16 @@ Due to some time restraints I could not implement a improved targeting algorithm
 how I could implement something like this. Implementation of this "mode" would be easy to do, I can create another menu option to set the mode
 of the AI. If this mode was set to e.g. "Advanced" I would instead create a new instance of a new Player Object called "AdvancedAiPlayer"
 which would inherit "AiPlayer" so it has its custom functions to do specific AI related stuff from the normal AI. 
+
+#### Validation
+There are a few places where I could have improved user input validation. Some places will cause the program to stop functioning as it tries to convert
+like a empty string to an integer which uses `std::stoi()`, with an empty string this will throw an exception.
+
+#### Exception Handling
+There are a few places in my code where exceptions could be thrown by the system, e.g. from an invalid input, to accessing a vector using
+an out of range index. I could wrap these in try-catch blocks and if they are thrown I can show a user-friendly message. 
+
+#### Commenting
+I could have commented more of my code in-line. I mainly focused on documentation the code with the `///` comments above the method declaration
+or class declaration in the header files `(.h)`. This way in a reputable IDE, it will pick up on this documentation and will show the docs right in
+the IDE. 
